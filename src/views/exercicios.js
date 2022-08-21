@@ -1,12 +1,14 @@
 import  React, { useEffect, useState}  from 'react';
 import { View, FlatList, SafeAreaView, StyleSheet, Text, TextInput } from 'react-native';
+import {ButtonEnv} from '../components/ButtonEnv'
+
 
 
 
 function Exercicios() {
     const [data, setData] = useState([])
     const [originalData, setOriginalData] = useState([])
-
+    const [enviromentsSelected, setEnviromentsSelected] = useState('all')
 
     useEffect(() => {
         fetch('https://jsonplaceholder.typicode.com/posts')
@@ -28,6 +30,34 @@ function Exercicios() {
         )
     }
 
+    const DATA = [
+        {
+          id: '1',
+          title: 'Ansiedade',
+        },
+        {
+          id: '2',
+          title: 'Foco',
+        },
+        {
+          id: '3',
+          title: 'Yoga',
+        },
+        {
+            id: '4',
+            title: 'Estresse',
+          },
+          {
+            id: '5',
+            title: 'Sono',
+          },
+          {
+            id: '6',
+            title: 'Psicologia',
+          },
+      ];
+
+
     function search(s){
       let arr = JSON.parse(JSON.stringify(originalData))
       setData(arr.filter(d => d.title.includes(s)))
@@ -40,28 +70,44 @@ function Exercicios() {
       setData(arr.filter(d => d.title.includes(s) || d.body.includes(s)))
     }
     return (
-        <View>
+
             <SafeAreaView>
-                <TextInput 
-                  style={styles.input} 
-                  placeholder={'Pesquisa aqui'}
-                  onChangeText={(s) => search(s)}
-                  autoCapitalize="none"
+                <View style={styles.header}>
+                    <TextInput 
+                        style={styles.input} 
+                        placeholder={'Pesquisa aqui'}
+                        onChangeText={(s) => search(s)}
+                        autoCapitalize="none"
+                        />
+                </View>
+                <FlatList 
+                    data={DATA}
+                    renderItem={({item}) => 
+                    <ButtonEnv 
+                    title={item.title}
+                    />}
+                    keyExtractor={(item) => item.id}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
                 />
-                  
+
                 <FlatList 
                     data={data}
                     keyExtractor={(item) => String(item.id)}
                     renderItem={({item}) => renderPost(item)}
                 />
             </SafeAreaView>
-        </View>
+
     )
 }
 
 const styles = StyleSheet.create({
+    header: {
+        backgroundColor: 'powderblue',
+        height: 100,
+    },
     card: {
-        borderColor: '#000',
+        borderColor: '#222',
         borderWidth: 1,
         borderRadius: 4,
         padding: 15,
@@ -84,9 +130,18 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 4,
         height: 40,
+        marginTop: 10,
         marginHorizontal: 20,
-        paddingLeft: 10
-    }
+        paddingLeft: 10,
+        backgroundColor: '#fff',
+    },
+    enviromentList: {
+        height: 40,
+        justifyContent: 'center',
+        paddingBottom: 5,
+        paddingHorizontal: 32,
+        marginVertical: 32
+    },
 })
 
 export default Exercicios
