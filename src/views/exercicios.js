@@ -2,9 +2,6 @@ import  React, { useEffect, useState}  from 'react';
 import { View, FlatList, SafeAreaView, StyleSheet, Text, TextInput } from 'react-native';
 import {ButtonEnv} from '../components/ButtonEnv'
 
-
-
-
 function Exercicios() {
     const [data, setData] = useState([])
     const [originalData, setOriginalData] = useState([])
