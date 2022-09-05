@@ -5,8 +5,11 @@ import Navigation from './src/stack/Navigation'
 import { Inter_900Black, Inter_700Bold, Inter_400Regular, Inter_500Medium } from '@expo-google-fonts/inter';
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
-
+import { Menu } from './src/views/Menu'
 import {Entrar} from './src/views/Entrar'
+
+
+
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {

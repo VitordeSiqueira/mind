@@ -1,8 +1,9 @@
 import  React, { useEffect, useState}  from 'react';
-import { View, FlatList, SafeAreaView, StyleSheet, Text, TextInput } from 'react-native';
+import { View, FlatList, SafeAreaView, StyleSheet, Button,Text, TextInput } from 'react-native';
 import {ButtonEnv} from '../components/ButtonEnv'
 
-function Exercicios() {
+function Exercicios({navigation}) {
+
     const [data, setData] = useState([])
     const [originalData, setOriginalData] = useState([])
     const [enviromentsSelected, setEnviromentsSelected] = useState('all')
@@ -25,6 +26,10 @@ function Exercicios() {
                 </Text>
             </View>
         )
+    }
+
+    function handleStart() {
+        navigation.navigate('Entrar')
     }
 
     const DATA = [
@@ -73,10 +78,14 @@ function Exercicios() {
                     <TextInput 
                         style={styles.input} 
                         placeholder={'Pesquisa aqui'}
-                        onChangeText={(s) => search(s)}
                         autoCapitalize="none"
                         />
                 </View>
+                <Button
+                    onPress={handleStart}
+                    title='Cancelar'
+                    accessibilityLabel='Cancelar'
+                />
                 <FlatList 
                     data={DATA}
                     renderItem={({item}) => 

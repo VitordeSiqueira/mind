@@ -1,26 +1,29 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import Menu  from '../views/Menu'
-import exercicios from '../views/exercicios'
-import themes from '../themes/padrao'
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import Menu from "../views/Menu";
+import Exercicios from "../views/exercicios";
+import themes from "../themes/padrao";
+import { Entrar } from "../views/Entrar";
 
-import {Feed, Article} from './Tabs'
 const Drawer = createDrawerNavigator();
 
 export default function Navigation() {
   return (
-
-    <Drawer.Navigator drawerContent={props => <Menu {...props} /> } useLegacyImplementation
-    screenOptions={{headerShown: true, drawerInactiveTintColor: themes.colors.white, drawerActiveBackgroundColor: themes.colors.secondary,  drawerActiveTintColor: '#909090'}}
+    <Drawer.Navigator
+      drawerContent={(props) => <Menu {...props} />}
+      screenOptions={{
+        headerShown: true,
+        InactiveTintColor: themes.colors.white,
+        ActiveBackgroundColor: themes.colors.secondary,
+        ActiveTintColor: "#909090",
+      }}
     >
-      <Drawer.Screen name="Perfil" component={Feed} />
-      <Drawer.Screen name="Exercícios" component={exercicios} />
-      <Drawer.Screen name="Recentes" component={Feed} />
-      <Drawer.Screen name="Amigos" component={Feed} />
-      <Drawer.Screen name="Configurações" component={Feed} />
-      <Drawer.Screen name="Ajuda" component={Article} />
-
+      <Drawer.Screen name="Perfil" component={Exercicios} />
+      <Drawer.Screen name="Exercicios" component={Exercicios} />
+      <Drawer.Screen name="Recentes" component={Exercicios} />
+      <Drawer.Screen name="Amigos" component={Exercicios} />
+      <Drawer.Screen name="Configurações" component={Exercicios} />
+      <Drawer.Screen name="Entrar" component={Entrar} />
     </Drawer.Navigator>
-
   );
 }
