@@ -4,6 +4,7 @@ import Menu from "../views/Menu";
 import Exercicios from "../views/exercicios";
 import themes from "../themes/padrao";
 import { Entrar } from "../views/Entrar";
+import  Cadastro  from '../views/Cadastro'
 
 const Drawer = createDrawerNavigator();
 
@@ -22,7 +23,7 @@ export default function Navigation() {
       <Drawer.Screen name="Exercicios" component={Exercicios} />
       <Drawer.Screen name="Recentes" component={Exercicios} />
       <Drawer.Screen name="Amigos" component={Exercicios} />
-      <Drawer.Screen name="Configurações" component={Exercicios} />
+      <Drawer.Screen name="Configurações" component={Cadastro} />
       <Drawer.Screen name="Entrar" component={Entrar} />
     </Drawer.Navigator>
   );

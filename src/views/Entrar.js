@@ -102,6 +102,7 @@ export function Entrar(){
                     <Link
                     px="8"
                     mt="7"
+                    onPress={() => navigation.navigate('Perfil')}
                     _text={{
                         fontSize: "sm",
                         fontWeight: "medium",
