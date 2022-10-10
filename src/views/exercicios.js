@@ -1,5 +1,6 @@
 import  React, { useEffect, useState}  from 'react';
 import { View, FlatList, SafeAreaView, StyleSheet, Button,Text, TextInput } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import {ButtonEnv} from '../components/ButtonEnv'
 
 function Exercicios({navigation}) {
@@ -17,14 +18,16 @@ function Exercicios({navigation}) {
 
     function renderPost(item) {
         return (
-            <View style={styles.card}>
-                <Text style={styles.title} numberOfLines={1}>
-                    {item.title}
-                </Text>
-                <Text style={styles.body} numberOfLines={4}>
-                    {item.body}
-                </Text>
-            </View>
+            <TouchableOpacity onPress={() => navigation.navigate('Video')}>
+                <View style={styles.card}>
+                    <Text style={styles.title} numberOfLines={1}>
+                        {item.title}
+                    </Text>
+                    <Text style={styles.body} numberOfLines={4}>
+                        {item.body}
+                    </Text>
+                </View>
+            </TouchableOpacity>
         )
     }
 

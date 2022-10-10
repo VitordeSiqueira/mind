@@ -2,7 +2,7 @@ import React from 'react'
 import { NativeBaseProvider,Link , Box, Image, WarningOutlineIcon, Center, Heading, Input, FormControl, Icon, Button, Checkbox, Text, HStack,VStack} from 'native-base'
 import { MaterialIcons } from '@expo/vector-icons/'
 
-export function Entrar(){
+export function Entrar({navigation}){
 
     return(
         <NativeBaseProvider>
