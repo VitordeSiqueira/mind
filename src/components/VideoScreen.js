@@ -73,11 +73,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     buttons: {
-
         backgroundColor: '#ffffff',
-        width: 50,
-        height: 50,
-        borderRadius: 25,
+
     },
     video: {
         width: '90%',

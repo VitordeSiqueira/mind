@@ -19,7 +19,7 @@ const Menu = (props) => {
                 </View>
                 <View style={{margin: 15}}>
                     <DrawerItem label="Exercicios" onPress={() => props.navigation.navigate("Exercicios")}/>
-                    <DrawerItem label="Recentes" onPress={() => props.navigation.navigate("Exercicios")}/>
+                    <DrawerItem label="Recentes" onPress={() => props.navigation.navigate("Audio")}/>
                     <DrawerItem label="Amigos"  onPress={() => props.navigation.navigate("Exercicios")}/>
                     <DrawerItem label="Configurações"onPress={() => props.navigation.navigate("Configurações")}/>
                     <DrawerItem label="Ajuda"  onPress={() => props.navigation.navigate("Entrar")}/>

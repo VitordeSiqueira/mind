@@ -6,7 +6,7 @@ import themes from "../themes/padrao";
 import { Entrar } from "../views/Entrar";
 import  Cadastro  from '../views/Cadastro'
 import VideoScreen from '../components/VideoScreen'
-
+import ExecAudio from '../components/Audio'
 const Drawer = createDrawerNavigator();
 
 export default function Navigation() {
@@ -22,11 +22,12 @@ export default function Navigation() {
     >
       <Drawer.Screen name="Perfil" component={Exercicios} />
       <Drawer.Screen name="Exercicios" component={Exercicios} />
-      <Drawer.Screen name="Recentes" component={Exercicios} />
+      <Drawer.Screen name="Audio" component={ExecAudio} />
       <Drawer.Screen name="Amigos" component={Exercicios} />
       <Drawer.Screen name="Configurações" component={Cadastro} />
       <Drawer.Screen name="Entrar" component={Entrar} />
       <Drawer.Screen name="Video" component={VideoScreen} />
+
     </Drawer.Navigator>
   );
 }
