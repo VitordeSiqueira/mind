@@ -23,6 +23,8 @@ const Menu = (props) => {
                     <DrawerItem label="Amigos"  onPress={() => props.navigation.navigate("Exercicios")}/>
                     <DrawerItem label="Configurações"onPress={() => props.navigation.navigate("Configurações")}/>
                     <DrawerItem label="Ajuda"  onPress={() => props.navigation.navigate("Entrar")}/>
+                    <DrawerItem label="Perfil"  onPress={() => props.navigation.navigate("Perfil")}/>
+
                 </View>
             </DrawerContentScrollView>
 

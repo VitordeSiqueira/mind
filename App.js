@@ -50,9 +50,11 @@ export default function App() {
     return null;
   }
   return (
+    <NativeBaseProvider>
     <NavigationContainer onReady={onLayoutRootView}>
       <Navigation/>
     </NavigationContainer>
+        </NativeBaseProvider>
     // <NativeBaseProvider>
     //   <Entrar/>
     // </NativeBaseProvider>
