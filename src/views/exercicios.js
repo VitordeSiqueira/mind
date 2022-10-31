@@ -30,9 +30,6 @@ function Exercicios({navigation}) {
         if (tipo == "Texto"){
             navigation.navigate('Texto')
         }
-
-
-
     }
 
     function renderPost(item) {
