@@ -1,8 +1,57 @@
-import React from 'react'
+import React, { useState,useEffect } from 'react'
 import { NativeBaseProvider,Link , Box, Image, WarningOutlineIcon, Center, Heading, Input, FormControl, Icon, Button, Checkbox, Text, HStack,VStack} from 'native-base'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { MaterialIcons } from '@expo/vector-icons/'
+import { useNavigation, CommonActions } from '@react-navigation/native'
 
-export function Entrar({navigation}){
+export function Entrar(){
+    const navigation = useNavigation()
+
+    const [emailField, setEmailField] = useState('')
+    const [senhaField, setSenhaField] = useState('')
+    const [api, setApi] = useState([])
+
+    useEffect(() => {
+        fetch('https://mind-back.onrender.com/perfil')
+        .then((response) => response.json())
+        .then((json) => {setApi(json)})
+
+    }, [])
+
+    console.log(api)
+    const handleMessageButtonClick = () => {
+        //iremos enviá-lo para o SignUp, sem a possibilidade de voltar. (se voltar, fecha o App )
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [
+                    { name: 'Cadastro' },
+                ],
+            })
+        )
+    }
+
+    const handleSignInClick = async () => {
+        if (senhaField && emailField) {
+          let res = await Api.signIn(emailField, senhaField)
+          if (res.access_token) {
+            await AsyncStorage.setItem('token', res.access_token)
+            await AsyncStorage.setItem('user_id', res.user_id)
+            navigation.dispatch(
+              CommonActions.reset({
+                index: 0,
+                routes: [
+                  { name: 'PreLoad' },
+                ],
+              })
+            )
+          } else {
+            Platform.OS === 'web' ? alert(`‼️Erro: ${res.errors[0].msg}`) : Alert.alert("‼️Erro", res.errors[0].msg)
+          }
+        } else {
+          Platform.OS === 'web' ? alert(`‼️Atenção: Preencha todos os campos`) : Alert.alert("‼️Atenção", 'Preencha todos os campos')
+        }
+      }
 
     return(
         <NativeBaseProvider>
@@ -33,7 +82,8 @@ export function Entrar({navigation}){
                 <FormControl isRequired>
                     <FormControl.Label>E-mail</FormControl.Label>
                     <Input 
-                        placeholder='seu@email.com.br' 
+                        placeholder='seu@email.com.br'
+                        onChangeText={t => setEmailField(t)}
                         InputLeftElement={
                             <Icon
                             as={<MaterialIcons name="person" />}
@@ -55,6 +105,7 @@ export function Entrar({navigation}){
                     <FormControl.Label>Senha</FormControl.Label>
                     <Input 
                         placeholder='sua senha'
+                        onChangeText={t => setSenhaField(t)}
                         InputLeftElement={
                             <Icon
                             as={<MaterialIcons name="lock" />}
@@ -78,6 +129,7 @@ export function Entrar({navigation}){
                     </VStack>
                 </FormControl>
                     <Button
+                        onPress={handleSignInClick}
                         mt="7"
                         colorScheme="purple"
                     >
@@ -102,7 +154,7 @@ export function Entrar({navigation}){
                     <Link
                     px="8"
                     mt="7"
-                    onPress={() => navigation.navigate('Perfil')}
+                    onPress={handleMessageButtonClick}
                     _text={{
                         fontSize: "sm",
                         fontWeight: "medium",

@@ -2,6 +2,7 @@ import  React, { useEffect, useState}  from 'react';
 import { View, FlatList, SafeAreaView, StyleSheet, Button,Text, TextInput } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {ButtonEnv} from '../components/ButtonEnv'
+import  Feather  from 'react-native-vector-icons/Feather'
 
 function Exercicios({navigation}) {
 
@@ -10,22 +11,56 @@ function Exercicios({navigation}) {
     const [enviromentsSelected, setEnviromentsSelected] = useState('all')
 
     useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/posts')
+        fetch('https://mind-back.onrender.com/conteudo')
         .then((response) => response.json())
         .then((json) => {setOriginalData(json);setData(json)})
 
     }, [])
 
+    function estadoConteudo(tipo, url) {
+        console.log(url)
+        if (tipo == "Video"){
+            navigation.navigate('Video', {urls: url})
+        }
+
+        if (tipo == "Audio"){
+            navigation.navigate('Audio', {urls: url})
+        }
+
+        if (tipo == "Texto"){
+            navigation.navigate('Texto')
+        }
+
+
+
+    }
+
     function renderPost(item) {
+        let iconTipo = ""
+        if (item.tipo == "Video"){
+            iconTipo = "video"
+        }else if(item.tipo = "Audio"){
+            iconTipo = "headphones"
+        }else if(item.tipo = "Audio"){
+            iconTipo = "type"
+        }
         return (
-            <TouchableOpacity onPress={() => navigation.navigate('Video')}>
+            <TouchableOpacity onPress={() =>  estadoConteudo(item.tipo, item.dados_arquivo.url)}>
                 <View style={styles.card}>
-                    <Text style={styles.title} numberOfLines={1}>
-                        {item.title}
-                    </Text>
-                    <Text style={styles.body} numberOfLines={4}>
-                        {item.body}
-                    </Text>
+                    <View style={styles.icon}>
+                        <Feather
+                            name={iconTipo}
+                            size={25}
+                        />
+                    </View>
+                    <View style={styles.conteudo}>
+                        <Text style={styles.title} numberOfLines={1}>
+                            {item.titulo}
+                        </Text>
+                        <Text style={styles.body} numberOfLines={4}>
+                            {item.tipo}
+                        </Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         )
@@ -65,14 +100,14 @@ function Exercicios({navigation}) {
 
     function search(s){
       let arr = JSON.parse(JSON.stringify(originalData))
-      setData(arr.filter(d => d.title.includes(s)))
+      setData(arr.filter(d => d.titulo.includes(s)))
 
       //remover assentos da pesquisa e do titulo
 
       //procurar em lower case ou upper
 
       //script para procurando tanto no titulo ou corpo 
-      setData(arr.filter(d => d.title.includes(s) || d.body.includes(s)))
+      //setData(arr.filter(d => d.titulo.includes(s) || d.body.includes(s)))
     }
     return (
 
@@ -82,6 +117,7 @@ function Exercicios({navigation}) {
                         style={styles.input} 
                         placeholder={'Pesquisa aqui'}
                         autoCapitalize="none"
+                        onChangeText={(s) => search(s)}
                         />
                 </View>
                 <Button
@@ -102,7 +138,7 @@ function Exercicios({navigation}) {
 
                 <FlatList 
                     data={data}
-                    keyExtractor={(item) => String(item.id)}
+                    keyExtractor={(item) => String(item._id)}
                     renderItem={({item}) => renderPost(item)}
                 />
             </SafeAreaView>
@@ -115,6 +151,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'powderblue',
         height: 100,
     },
+    icon: {
+        marginRight: 15,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     card: {
         borderColor: '#222',
         borderWidth: 1,
@@ -122,6 +163,7 @@ const styles = StyleSheet.create({
         padding: 15,
         marginHorizontal: 20,
         marginTop: 20,
+        flexDirection: 'row'
     },
     title: {
         fontSize: 14,

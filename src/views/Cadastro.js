@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import { NativeBaseProvider,Link , Box, Image, WarningOutlineIcon, Center, Heading, Input, FormControl, Icon, Button, Checkbox, Text, HStack,VStack} from 'native-base'
+import { NativeBaseProvider, Pressable , Box, Image, WarningOutlineIcon, Center, Heading, Input, FormControl, Icon, Button, Checkbox, Text, HStack,VStack} from 'native-base'
 import { StyleSheet } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons/'
-import { cnpjMask } from '../components/cnpjMask.js'
+
 
 function Cadastro() {
-
+const [show, setShow] = useState(false);
   const [values, setValues] = useState({ cnpj: '' })
 
   const inputChange = (e) => {
@@ -36,7 +36,28 @@ function Cadastro() {
               </Heading>
 
 
-              <FormControl isRequired>
+              <FormControl>
+                <FormControl.Label>Nome</FormControl.Label>
+                <Input
+                  keyboardType="default"
+                />
+                
+              </FormControl>
+
+              <FormControl>
+                <FormControl.Label>CPF</FormControl.Label>
+                <Input
+                  keyboardType="numeric"
+                />
+                
+              </FormControl>
+              <FormControl>
+                <FormControl.Label>Telefone</FormControl.Label>
+                <Input
+                  keyboardType="numeric"
+                />
+
+<FormControl isRequired>
                   <FormControl.Label>E-mail</FormControl.Label>
                   <Input 
                       placeholder='seu@email.com.br' 
@@ -60,6 +81,7 @@ function Cadastro() {
               <FormControl>
                   <FormControl.Label>Senha</FormControl.Label>
                   <Input 
+                  
                       placeholder='sua senha'
                       wrapperRef={"0000-0000"}
                       InputLeftElement={
@@ -72,12 +94,7 @@ function Cadastro() {
                       }
                   />
               </FormControl>
-
-              <FormControl>
-                <FormControl.Label>CPF</FormControl.Label>
-                <Input
-                  keyboardType="numeric"
-                />
+                
               </FormControl>
                   <Button
                       mt="7"
@@ -85,6 +102,8 @@ function Cadastro() {
                   >
                       Cadastrar-se
                   </Button>
+
+                  
               </Box>
 
 

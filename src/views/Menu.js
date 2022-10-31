@@ -21,7 +21,7 @@ const Menu = (props) => {
                     <DrawerItem label="Exercicios" onPress={() => props.navigation.navigate("Exercicios")}/>
                     <DrawerItem label="Recentes" onPress={() => props.navigation.navigate("Audio")}/>
                     <DrawerItem label="Amigos"  onPress={() => props.navigation.navigate("Exercicios")}/>
-                    <DrawerItem label="Configurações"onPress={() => props.navigation.navigate("Configurações")}/>
+                    <DrawerItem label="Configurações"onPress={() => props.navigation.navigate("Cadastro")}/>
                     <DrawerItem label="Ajuda"  onPress={() => props.navigation.navigate("Entrar")}/>
                     <DrawerItem label="Perfil"  onPress={() => props.navigation.navigate("Perfil")}/>
 
