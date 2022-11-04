@@ -21,7 +21,7 @@ function Perfil() {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.info}>
-          <Example />
+          <Example url="https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png" />
           <View alignSelf="center">
             <Nome name="João Vinicius" />
             <DescPerfil descricao="Yoga <3" />
