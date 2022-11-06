@@ -2,19 +2,35 @@ import React, { useState } from 'react'
 import { NativeBaseProvider, Pressable, Box, Image, WarningOutlineIcon, Center, Heading, Input, FormControl, Icon, Button, Checkbox, Text, HStack, VStack } from 'native-base'
 import { StyleSheet } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons/'
+import { InputArea, InputCompleto } from '../components/Input'
+import { StyledButtonPrimario, StyledMessageButton } from '../components/Botao'
+import Api from '../resources/Api'
 
+export default ({ navigation }) => {
+  const [cpfField, setCpfField] = useState('')
+  const [nomeField, setNomeField] = useState('')
+  const [sobrenomeField, setSobrenomeField] = useState('')
+  const [telefoneField, setTelefoneField] = useState('')
+  const [emailField, setEmailField] = useState('')
+  const [senhaField, setSenhaField] = useState('')
 
-function Cadastro({ navigation }) {
-  const [show, setShow] = useState(false);
-  const [values, setValues] = useState({ cnpj: '' })
+  const handleCadastroClick = async () => {
+    if (cpfField && nomeField && sobrenomeField && telefoneField && emailField && senhaField) {
+      let res = await Api.cadastro(cpfField, nomeField, sobrenomeField, telefoneField, emailField, senhaField);
+      if (res.error) {
+        Platform.OS === "web"
+          ? alert(`‼️Erro: ${res.errors[0].msg}`)
+          : Alert.alert("‼️Erro", res.errors[0].msg);
+      } else {
+        navigation.push("Entrar")
+      }
+    } else {
+      Platform.OS === "web"
+        ? alert(`‼️Atenção: Preencha todos os campos`)
+        : Alert.alert("‼️Atenção", "Preencha todos os campos");
+    }
+  };
 
-  const inputChange = (e) => {
-    const { name, value } = e.target
-    setValues({
-      ...values,
-      [name]: value
-    })
-  }
   return (
     <Center
       height="full"
@@ -23,99 +39,57 @@ function Cadastro({ navigation }) {
     >
       <VStack width="full" p={5}>
 
-
         <Box width="full">
 
-          <Heading
-            color="coolGray.700"
-            _dark={{ color: "white" }}
-            _light={{ color: "black" }}
-          >
-            Cadastro
-          </Heading>
+          <Titulo >Cadastrar-se</Titulo>
 
-
-          <FormControl>
-            <FormControl.Label>Nome</FormControl.Label>
-            <Input
-              keyboardType="default"
+          <InputArea>
+            <InputCompleto
+              icon="human"
+              placeholder="Digite o seu CPF"
+              value={cpfField}
+              onChangeText={t => setCpfField(t)} />
+            <InputCompleto
+              icon="human"
+              placeholder="Digite o seu primeiro nome"
+              value={nomeField}
+              onChangeText={t => setNomeField(t)}
+            />
+            <InputCompleto
+              icon="human"
+              placeholder="Digite o seu sobrenome"
+              value={sobrenomeField}
+              onChangeText={t => setSobrenomeField(t)}
+            />
+            <InputCompleto
+              icon="phone"
+              placeholder="Digite o seu telefone"
+              value={telefoneField}
+              onChangeText={t => setTelefoneField(t)}
+            />
+            <InputCompleto
+              icon="email"
+              placeholder="Digite o seu e-mail"
+              value={emailField}
+              onChangeText={t => setEmailField(t)}
+            />
+            <InputCompleto
+              icon="lock"
+              placeholder="Digite a sua senha"
+              value={senhaField}
+              onChangeText={t => setSenhaField(t)}
+              password={true}
             />
 
-          </FormControl>
+            <StyledButtonPrimario
+              icon="login"
+              text="Registrar-se"
+              onPress={handleCadastroClick} />
 
-          <FormControl>
-            <FormControl.Label>CPF</FormControl.Label>
-            <Input
-              keyboardType="numeric"
-            />
+          </InputArea>
 
-          </FormControl>
-          <FormControl>
-            <FormControl.Label>Telefone</FormControl.Label>
-            <Input
-              keyboardType="numeric"
-            />
-
-            <FormControl isRequired>
-              <FormControl.Label>E-mail</FormControl.Label>
-              <Input
-                placeholder='seu@email.com.br'
-                InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="person" />}
-                    size={5}
-                    ml={2}
-                    color="muted.400"
-                  />
-                }
-              />
-
-              <FormControl.ErrorMessage
-                leftIcon={<WarningOutlineIcon size="xs" />}
-              >
-                E-mail inválido
-              </FormControl.ErrorMessage>
-            </FormControl>
-
-            <FormControl>
-              <FormControl.Label>Senha</FormControl.Label>
-              <Input
-
-                placeholder='sua senha'
-                wrapperRef={"0000-0000"}
-                InputLeftElement={
-                  <Icon
-                    as={<MaterialIcons name="lock" />}
-                    size={5}
-                    ml={2}
-                    color="muted.400"
-                  />
-                }
-              />
-            </FormControl>
-
-          </FormControl>
-          <Button
-            mt="7"
-            colorScheme="purple"
-          >
-            Cadastrar-se
-          </Button>
-
-
+          <StyledMessageButton onPress={() => navigation.push("Entrar")} text="Ainda não tem uma conta?" textBold="Registre-se" />
         </Box>
-
-
-
-
-        {/* <HStack mt={5}>
-                  <Checkbox value="agree" >
-                      <Text  ml={3}>
-                          Concordo com a política de segurança
-                      </Text>
-                  </Checkbox>
-              </HStack> */}
-
       </VStack>
     </Center>
   )
@@ -128,5 +102,3 @@ const styles = StyleSheet.create({
     backgroundColor: '#5454ddd'
   }
 })
-
-export default Cadastro

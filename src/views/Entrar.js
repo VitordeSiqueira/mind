@@ -20,7 +20,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialIcons } from "@expo/vector-icons/";
 import { useNavigation, CommonActions } from "@react-navigation/native";
 import { Alert, Platform } from 'react-native'
-import { InputArea, InputSignInUp } from '../components/Input'
+import { InputArea, InputCompleto } from '../components/Input'
 import { StyledButtonPrimario, StyledMessageButton } from '../components/Botao'
 import { Titulo, StyledLinkLegenda } from '../components/Texto'
 import Api from '../resources/Api'
@@ -32,21 +32,11 @@ export default function Entrar({ navigation }) {
   const [emailField, setEmailField] = useState("");
   const [senhaField, setSenhaField] = useState("");
 
-  const handleRedirectCadastroButtonClick = () => {
-    //Redireciiona para o Cadastro, sem a possibilidade de voltar. (se voltar, fecha o App )
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 0,
-        routes: [{ name: "Cadastro" }],
-      })
-    );
-  };
   const { entrar } = React.useContext(AuthContext);
 
   const handleEntrarClick = async () => {
     if (senhaField && emailField) {
       let res = await Api.entrar(emailField, senhaField);
-      console.log('teste')
       if (res.access_token) {
         await AsyncStorage.setItem("token", res.access_token);
         await AsyncStorage.setItem("perfil_id", res.perfil_id);
@@ -79,13 +69,13 @@ export default function Entrar({ navigation }) {
         </Titulo>
 
         <InputArea>
-          <InputSignInUp
+          <InputCompleto
             icon="email"
             placeholder="Digite o seu e-mail"
             value={emailField}
             onChangeText={t => setEmailField(t)}
           />
-          <InputSignInUp
+          <InputCompleto
             icon="lock"
             placeholder="Digite a sua senha"
             value={senhaField}

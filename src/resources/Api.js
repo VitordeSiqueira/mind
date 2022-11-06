@@ -30,14 +30,14 @@ export default {
         await AsyncStorage.removeItem('token')
         return null
     },
-    cadastro: async (nome, email, senha) => {
+    cadastro: async (nome, sobrenome, cpf, email, senha) => {
         const req = await fetch(`${BASE_API}/perfil`, {
             method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nome, email, senha })
+            body: JSON.stringify({ nome, sobrenome, cpf, email, senha })
         })
         const json = await req.json()
         return json

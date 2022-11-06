@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from 'react'
 import { View, StyleSheet } from "react-native";
 import Example from "../components/Avatar";
 import Nome from "../components/NomePerfil";
@@ -15,8 +15,19 @@ import {
   ScrollView,
   Heading,
 } from "native-base";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-function Perfil() {
+export default () => {
+  
+  const consultaPerfil = async () => {
+    const token = await AsyncStorage.getItem('perfil')
+  }
+  
+  useEffect(() => {
+    consultaPerfil()
+  }, [])
+
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -209,5 +220,3 @@ const styles = StyleSheet.create({
     color: "black",
   },
 });
-
-export default Perfil;

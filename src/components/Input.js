@@ -32,7 +32,7 @@ const BotaoTouch = styled.TouchableOpacity`
     padding-right: 8px; 
 `
 
-export const InputSignInUp = ({ icon, placeholder, value, onChangeText, password }) => {
+export const InputCompleto = ({ icon, placeholder, value, onChangeText, password }) => {
     const [senha, setSenha] = useState(password);
     return (
         <InputAreaForEach>
