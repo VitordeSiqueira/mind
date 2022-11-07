@@ -38,18 +38,18 @@ export default function Entrar({ navigation }) {
     if (senhaField && emailField) {
       let res = await Api.entrar(emailField, senhaField);
       if (res.access_token) {
-        await AsyncStorage.setItem("token", res.access_token);
-        await AsyncStorage.setItem("perfil_id", res.perfil_id);
+        await AsyncStorage.setItem("token", res.access_token)
+        await AsyncStorage.setItem("perfil_id", res.perfil_id)
         entrar(res.access_token)
       } else {
         Platform.OS === "web"
-          ? alert(`‼️Erro: ${res.errors[0].msg}`)
-          : Alert.alert("‼️Erro", res.errors[0].msg);
+          ? alert(`‼️Erro: ${res.error}`)
+          : Alert.alert("‼️Erro", res.error)
       }
     } else {
       Platform.OS === "web"
         ? alert(`‼️Atenção: Preencha todos os campos`)
-        : Alert.alert("‼️Atenção", "Preencha todos os campos");
+        : Alert.alert("‼️Atenção", "Preencha todos os campos")
     }
   };
 
