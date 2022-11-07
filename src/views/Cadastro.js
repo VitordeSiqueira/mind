@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { NativeBaseProvider, Pressable, Box, Image, WarningOutlineIcon, Center, Heading, Input, FormControl, Icon, Button, Checkbox, Text, HStack, VStack } from 'native-base'
-import { StyleSheet } from 'react-native'
+import { Alert, Platform, StyleSheet } from 'react-native'
 import { MaterialIcons } from '@expo/vector-icons/'
 import { InputArea, InputCompleto } from '../components/Input'
 import { StyledButtonPrimario, StyledMessageButton } from '../components/Botao'
 import Api from '../resources/Api'
+import { Titulo } from '../components/Texto'
 
 export default ({ navigation }) => {
   const [cpfField, setCpfField] = useState('')
@@ -16,11 +17,12 @@ export default ({ navigation }) => {
 
   const handleCadastroClick = async () => {
     if (cpfField && nomeField && sobrenomeField && telefoneField && emailField && senhaField) {
-      let res = await Api.cadastro(cpfField, nomeField, sobrenomeField, telefoneField, emailField, senhaField);
+      let res = await Api.cadastro(cpfField, nomeField, sobrenomeField, telefoneField, emailField, senhaField)
+      console.log(res)
       if (res.error) {
         Platform.OS === "web"
-          ? alert(`‼️Erro: ${res.errors[0].msg}`)
-          : Alert.alert("‼️Erro", res.errors[0].msg);
+          ? alert(`‼️Erro: ${res.error}`)
+          : Alert.alert("‼️Erro", res.error);
       } else {
         navigation.push("Entrar")
       }
@@ -31,6 +33,17 @@ export default ({ navigation }) => {
     }
   };
 
+  const PlanosDisponiveis = async () => {
+    const planos = await Api.consultaPlanos()
+    console.log(planos)
+    if (planos.length) {
+      return planos.map(plano => {
+        return (
+          <Titulo >{plano.descricao}</Titulo>
+        )
+      })
+    }
+  }
   return (
     <Center
       height="full"
@@ -86,19 +99,13 @@ export default ({ navigation }) => {
               text="Registrar-se"
               onPress={handleCadastroClick} />
 
+            {PlanosDisponiveis()}
+
           </InputArea>
 
-          <StyledMessageButton onPress={() => navigation.push("Entrar")} text="Ainda não tem uma conta?" textBold="Registre-se" />
+          <StyledMessageButton onPress={() => navigation.push("Entrar")} text="Já tem uma conta?" textBold="Faça Login" />
         </Box>
       </VStack>
     </Center>
   )
 }
-
-const styles = StyleSheet.create({
-  inputCpf: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#5454ddd'
-  }
-})
