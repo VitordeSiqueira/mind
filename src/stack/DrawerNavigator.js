@@ -18,10 +18,7 @@ export default function DrawerNavigator() {
         <Drawer.Navigator
             drawerContent={(props) => <Menu {...props} />}
             screenOptions={{
-                headerShown: true,
-                InactiveTintColor: themes.colors.brand.white,
-                ActiveBackgroundColor: themes.colors.brand.secondary,
-                ActiveTintColor: "#909090",
+                headerShown: true
             }}
             backBehavior={"history"}
             initialRouteName="Perfil"
