@@ -47,7 +47,7 @@ export default ({ navigation }) => {
         : perfil ?
           <ScrollView>
             <View style={styles.info}>
-              <AvatarNomePerfil props={{ url: perfil.foto_perfil ? perfil.foto_perfil.url : "", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: perfil.nome }} />
+              <AvatarNomePerfil props={{ url: perfil.foto_perfil ? perfil.foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: perfil.nome }} />
               <Text style={styles.text} onPress={() => navigation.navigate("Amigos")}>39 Amigos</Text>
             </View>
 
