@@ -1,10 +1,15 @@
 export default {
     colors: {
         brand: {
-            primario: '#7764CF',
-            secundario: '#4F3AAF',
-            terciario: '#5F3AAF',
-            branco: '#fffafa',
+            primario: '#4F3AAF',
+            secundario: '#7764CF',
+            terciario: '#9886ed',
+            cinza: '#C4BFE7',
+            amarelo: '#FEDE2D',
+            verde: '#C7EB7A',
+            cinzaClaro: '#E5E3F5',
+            amareloClaro: '#FFF1A4',
+            verdeClaro: '#E7F6C5'
         },
         neutral: {
             neutral_0: '#25232D', neutral_80: '#1F1E28',
