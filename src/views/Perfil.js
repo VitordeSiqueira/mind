@@ -20,7 +20,7 @@ import { Progresso } from '../components/Progresso';
 import { Titulo2 } from '../components/Texto';
 import { Conquista } from '../components/Conquista';
 
-export default () => {
+export default ({ navigation }) => {
   const [perfil, setPerfil] = useState()
   const [loading, setLoading] = useState(false)
 
@@ -48,6 +48,7 @@ export default () => {
           <ScrollView>
             <View style={styles.info}>
               <AvatarNomePerfil props={{ url: perfil.foto_perfil ? perfil.foto_perfil.url : "", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: perfil.nome }} />
+              <Text style={styles.text} onPress={() => navigation.navigate("Amigos")}>39 Amigos</Text>
             </View>
 
             <Divider />
@@ -75,7 +76,7 @@ export default () => {
               <VStack space={4} alignItems="center">
                 {perfil.conquistas ?
                   perfil.conquistas.map((conquista) => (
-                    <Conquista conquistaInfo={conquista} key={conquista.id}/>
+                    <Conquista conquistaInfo={conquista} key={conquista.id} />
                   ))
                   :
                   <Text textAlign='center' fontSize="xl">

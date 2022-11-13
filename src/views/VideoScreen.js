@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Video } from 'expo-av';
 
@@ -12,11 +12,10 @@ export default function VideoScreen(urls) {
                 ref={video}
                 style={styles.video}
                 source={{
-                    uri: "https://mind-app-bucket.s3.sa-east-1.amazonaws.com/audios/1258bffd343dd8ba6be9e92f97147300-1+Minuto+de+Medita%C3%83%C2%A7%C3%83%C2%A3o+para+relaxar.mp3",
+                    uri: urls.route.params.urls,
                 }}
                 useNativeControls={true}
                 resizeMode="contain"
-                isLooping
                 onPlaybackStatusUpdate={status => setStatus(() => status)}
             />
             {/* <TouchableOpacity onPress={tempool}><Text>oio</Text></TouchableOpacity> */}

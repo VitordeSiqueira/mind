@@ -1,10 +1,10 @@
-import  React, { useEffect, useState}  from 'react';
-import { View, FlatList, SafeAreaView, StyleSheet, Button,Text, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, FlatList, SafeAreaView, StyleSheet, Button, Text, TextInput, TouchableOpacity } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import {ButtonEnv} from '../components/ButtonEnv'
-import  Feather  from 'react-native-vector-icons/Feather'
+import { ButtonEnv } from '../components/ButtonEnv'
+import Feather from 'react-native-vector-icons/Feather'
 
-function Exercicios({navigation}) {
+function Exercicios({ navigation }) {
 
     const [data, setData] = useState([])
     const [originalData, setOriginalData] = useState([])
@@ -12,37 +12,37 @@ function Exercicios({navigation}) {
 
     useEffect(() => {
         fetch('https://mind-back.onrender.com/conteudo')
-        .then((response) => response.json())
-        .then((json) => {setOriginalData(json);setData(json)})
+            .then((response) => response.json())
+            .then((json) => { setOriginalData(json); setData(json) })
 
     }, [])
 
     function estadoConteudo(tipo, url) {
         console.log(url)
-        if (tipo == "Video"){
-            navigation.navigate('Video', {urls: url})
+        if (tipo == "Video") {
+            navigation.navigate('Video', { urls: url })
         }
 
-        if (tipo == "Audio"){
-            navigation.navigate('Audio', {urls: url})
+        if (tipo == "Audio") {
+            navigation.navigate("Audio", { urls: url })
         }
 
-        if (tipo == "Texto"){
+        if (tipo == "Texto") {
             navigation.navigate('Texto')
         }
     }
 
     function renderPost(item) {
         let iconTipo = ""
-        if (item.tipo == "Video"){
+        if (item.tipo == "Video") {
             iconTipo = "video"
-        }else if(item.tipo = "Audio"){
+        } else if (item.tipo = "Audio") {
             iconTipo = "headphones"
-        }else if(item.tipo = "Audio"){
+        } else if (item.tipo = "Audio") {
             iconTipo = "type"
         }
         return (
-            <TouchableOpacity onPress={() =>  estadoConteudo(item.tipo, item.dados_arquivo.url)}>
+            <TouchableOpacity onPress={() => estadoConteudo(item.tipo, item.dados_arquivo.url)}>
                 <View style={styles.card}>
                     <View style={styles.icon}>
                         <Feather
@@ -69,76 +69,76 @@ function Exercicios({navigation}) {
 
     const DATA = [
         {
-          id: '1',
-          title: 'Ansiedade',
+            id: '1',
+            title: 'Ansiedade',
         },
         {
-          id: '2',
-          title: 'Foco',
+            id: '2',
+            title: 'Foco',
         },
         {
-          id: '3',
-          title: 'Yoga',
+            id: '3',
+            title: 'Yoga',
         },
         {
             id: '4',
             title: 'Estresse',
-          },
-          {
+        },
+        {
             id: '5',
             title: 'Sono',
-          },
-          {
+        },
+        {
             id: '6',
             title: 'Psicologia',
-          },
-      ];
+        },
+    ];
 
 
-    function search(s){
-      let arr = JSON.parse(JSON.stringify(originalData))
-      setData(arr.filter(d => d.titulo.includes(s)))
+    function search(s) {
+        let arr = JSON.parse(JSON.stringify(originalData))
+        setData(arr.filter(d => d.titulo.includes(s)))
 
-      //remover assentos da pesquisa e do titulo
+        //remover assentos da pesquisa e do titulo
 
-      //procurar em lower case ou upper
+        //procurar em lower case ou upper
 
-      //script para procurando tanto no titulo ou corpo 
-      //setData(arr.filter(d => d.titulo.includes(s) || d.body.includes(s)))
+        //script para procurando tanto no titulo ou corpo 
+        //setData(arr.filter(d => d.titulo.includes(s) || d.body.includes(s)))
     }
     return (
 
-            <SafeAreaView>
-                <View style={styles.header}>
-                    <TextInput 
-                        style={styles.input} 
-                        placeholder={'Pesquisa aqui'}
-                        autoCapitalize="none"
-                        onChangeText={(s) => search(s)}
-                        />
-                </View>
-                <Button
-                    onPress={handleStart}
-                    title='Cancelar'
-                    accessibilityLabel='Cancelar'
+        <SafeAreaView>
+            <View style={styles.header}>
+                <TextInput
+                    style={styles.input}
+                    placeholder={'Pesquisa aqui'}
+                    autoCapitalize="none"
+                    onChangeText={(s) => search(s)}
                 />
-                <FlatList 
-                    data={DATA}
-                    renderItem={({item}) => 
-                    <ButtonEnv 
-                    title={item.title}
+            </View>
+            <Button
+                onPress={() => console.log('oi')}
+                title='Cancelar'
+                accessibilityLabel='Cancelar'
+            />
+            <FlatList
+                data={DATA}
+                renderItem={({ item }) =>
+                    <ButtonEnv
+                        title={item.title}
                     />}
-                    keyExtractor={(item) => item.id}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                />
+                keyExtractor={(item) => item.id}
+                horizontal
+                showsHorizontalScrollIndicator={false}
+            />
 
-                <FlatList 
-                    data={data}
-                    keyExtractor={(item) => String(item._id)}
-                    renderItem={({item}) => renderPost(item)}
-                />
-            </SafeAreaView>
+            <FlatList
+                data={data}
+                keyExtractor={(item) => String(item._id)}
+                renderItem={({ item }) => renderPost(item)}
+            />
+        </SafeAreaView>
 
     )
 }

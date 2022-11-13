@@ -1,107 +1,52 @@
-import * as React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  ActivityIndicator,
-  Button,
-  TouchableOpacity
-} from 'react-native';
-import { Audio } from 'expo-av';
-import Controls from './VideoControls';
-import AntDesign from "react-native-vector-icons/AntDesign";
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { Video } from 'expo-av';
 
-const SampleTrack = require('./a.mp3');
-
-export default function ExecAudio() {
-  const [Loaded, SetLoaded] = React.useState(false);
-  const [Loading, SetLoading] = React.useState(false);
-  const sound = React.useRef(new Audio.Sound());
-
-  React.useEffect(() => {
-    LoadAudio();
-  }, []);
-
-  const PlayAudio = async () => {
-    try {
-      const result = await sound.current.getStatusAsync();
-      if (result.isLoaded) {
-        if (result.isPlaying === false) {
-          sound.current.playAsync();
-        }
-      }
-    } catch (error) {}
-  };
-
-  const PauseAudio = async () => {
-    try {
-      const result = await sound.current.getStatusAsync();
-      if (result.isLoaded) {
-        if (result.isPlaying === true) {
-          sound.current.pauseAsync();
-        }
-      }
-    } catch (error) {}
-  };
-
-  const LoadAudio = async () => {
-    SetLoading(true);
-    const checkLoading = await sound.current.getStatusAsync();
-    if (checkLoading.isLoaded === false) {
-      try {
-        const result = await sound.current.loadAsync(SampleTrack, {}, true);
-        if (result.isLoaded === false) {
-          SetLoading(false);
-          console.log('Error in Loading Audio');
-        } else {
-          SetLoading(false);
-          SetLoaded(true);
-        }
-      } catch (error) {
-        console.log(error);
-        SetLoading(false);
-      }
-    } else {
-      SetLoading(false);
-    }
-  };
-
+export default function ExecAudio(urls) {
+  const video = React.useRef(null);
+  const [status, setStatus] = React.useState({});
+  const [pause, setPause] = useState(false)
+  console.log(urls)
   return (
     <View style={styles.container}>
-      <View style={styles.AudioPLayer}>
-        {Loading ? (
-          <ActivityIndicator size={'small'} color={'red'} />
-        ) : (
-          <>
-            {Loaded === false ? (
-              <>
-                <ActivityIndicator />
-              </>
-            ) : (
-              
-              <View style={styles.container2}>
-                <TouchableOpacity title="Play Song" onPress={PlayAudio}><AntDesign name="playcircleo" size={30} color="#1b1246" /></TouchableOpacity>
-                <TouchableOpacity title="Pause Song" onPress={PauseAudio}><AntDesign name="playcircleo" size={30} color="#1b1246" /></TouchableOpacity>
-              
-              </View>
-            )}
-          </>
-        )}
-      </View>
+      <Video
+        ref={video}
+        style={styles.video}
+        source={{
+          uri: urls.route.params.urls,
+        }}
+        useNativeControls={true}
+        resizeMode="contain"
+        onPlaybackStatusUpdate={status => setStatus(() => status)}
+      />
+      {/* <TouchableOpacity onPress={tempool}><Text>oio</Text></TouchableOpacity> */}
+      {/* <TouchableOpacity onPress={abc}><Text>oiio</Text></TouchableOpacity> */}
+      {/* <View style={styles.buttons}>
+                <Button
+                    title={status.isPlaying ? 'Pause' : 'Play'}
+                    onPress={() =>
+                        status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
+                    }
+                />
+            </View> */}
+      {/* <Controls {...{togglePlayPauseBtn}} {...{pause}}/>  */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-    padding: 8,
+    flex: 9,
+    backgroundColor: '#8492A6',
+    alignItems: 'center'
   },
-  AudioPLayer: {
+  buttons: {
+    backgroundColor: '#ffffff',
+
+  },
+  video: {
     width: '100%',
-    height: 50,
-    alignItems: 'center',
-  },
+    marginTop: 80,
+    height: 400,
+  }
 });
