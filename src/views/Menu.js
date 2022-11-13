@@ -4,7 +4,7 @@ import { View, TouchableOpacity, Text } from 'react-native';
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
 import NomePerfil from '../components/NomePerfil'
 import DescPerfil from '../components/DescPerfil'
-import Example from '../components/Avatar'
+import AvatarNomePerfil from '../components/AvatarNomePerfil'
 import themes from '../themes/padrao'
 import Api from '../resources/Api'
 import { AuthContext } from '../resources/Context'
@@ -17,39 +17,35 @@ export default (props) => {
     //const navigation = useNavigation()
 
     return (
-        <View style={{ flex: 1, justifyContent: 'center', backgroundColor: themes.colors.primary }}>
+        <View style={{ flex: 1, justifyContent: 'center', backgroundColor: themes.colors.brand.secundario }}>
             <DrawerContentScrollView {...props} >
-                <View style={{ flex: 1, flexDirection: 'row', backgroundColor: themes.colors.secondary, paddingTop: 30, paddingBottom: 30 }} >
-                    <Example url="https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png" />
-                    <View>
-                        <NomePerfil name="João Vinicius" />
-                        <DescPerfil descricao="Yoga <3" />
-                    </View>
+                <View style={{ flex: 1, flexDirection: 'row', backgroundColor: themes.colors.brand.primario, paddingTop: 30, paddingBottom: 30 }} >
+                    <AvatarNomePerfil props={{ url: "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "lg", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: "perfil.nome" }} />
                 </View>
 
                 <View style={{ margin: 15 }}>
-                    <DrawerItem label="Exercicios" onPress={() => props.navigation.navigate("Exercicios")} />
-                    <DrawerItem label="Recentes" onPress={() => props.navigation.navigate("Audio")} />
-                    <DrawerItem label="Amigos" onPress={() => props.navigation.navigate("Exercicios")} />
-                    <DrawerItem label="Configurações" onPress={() => props.navigation.navigate("Cadastro")} />
-                    <DrawerItem label="Ajuda" onPress={() => props.navigation.navigate("Entrar")} />
-                    <DrawerItem label="Perfil" onPress={() => props.navigation.navigate("Perfil")} />
+                    <DrawerItem label="Perfil" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Perfil")} />
+                    <DrawerItem label="Exercicios" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Exercicios")} />
+                    <DrawerItem label="Recentes" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Exercicios")} />
+                    <DrawerItem label="Amigos" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Perfil")} />
+                    <DrawerItem label="Configurações" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Perfil")} />
+                    <DrawerItem label="Ajuda" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Perfil")} />
                 </View>
             </DrawerContentScrollView>
 
             <TouchableOpacity
                 style={{
-                    position: 'absolute',
                     margin: 15,
                     bottom: 10,
                     padding: 20,
+                    alignItems: 'flex-end'
                 }}
                 onPress={() => {
                     props.navigation.closeDrawer()
                     sair()
                 }}
             >
-                <Text>Sair</Text>
+                <Text style={{ color: '#ffffff', fontSize: 15, fontWeight: '700' }}>Sair</Text>
             </TouchableOpacity>
             <StatusBar
                 barStyle="light-content"

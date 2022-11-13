@@ -15,6 +15,7 @@ import {
   Text,
   HStack,
   VStack,
+  View,
 } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialIcons } from "@expo/vector-icons/";
@@ -58,12 +59,10 @@ export default function Entrar({ navigation }) {
       <Image
         size={150}
         resizeMode={"contain"}
-        borderRadius={100}
-        source={{ uri: "https://github.com/rodrigorgtic.png" }}
+        source={{ uri: "https://mind-app-bucket.s3.sa-east-1.amazonaws.com/outros/logo.png" }}
         alt="Foto do Usuário"
       />
       <VStack width="full" p={5}>
-
         <Titulo>
           Bem vindo!
         </Titulo>
