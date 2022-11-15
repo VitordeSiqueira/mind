@@ -30,7 +30,7 @@ export default function Amigos({ navigation }) {
     function renderItem(item) {
         return (
             <TouchableOpacity style={styles.itemAmigo}>
-                <AvatarPerfil props={{ url: "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: "Joao Vinicius" }} />
+                <AvatarPerfil props={{ url: perfil.foto_perfil ? perfil.foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: perfil.nome, amigos: perfil.amigos ? perfil.amigos.length : 0 }} onPress={() => navigation.navigate("Amigos")} />
             </TouchableOpacity>
         )
     }

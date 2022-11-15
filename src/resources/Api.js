@@ -78,5 +78,17 @@ export default {
         })
         const json = await req.json()
         return json
-    }
+    },
+    adicionaHistorico: async (perfil_id, conteudo_id) => {
+        const req = await fetch(`${BASE_API}/historico`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ perfil_id, conteudo_id })
+        })
+        const json = await req.json()
+        return json
+    },
 }
