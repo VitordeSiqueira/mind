@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import Menu from "../views/Menu";
-import Exercicios from "../views/exercicios";
+import Exercicios from "../views/Exercicios";
 import VideoScreen from '../views/VideoScreen'
 import ExecAudio from '../components/Audio'
 import Perfil from '../views/Perfil'
