@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components/native'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import themes from '../themes/padrao'
 
 export const InputArea = styled.ScrollView`
-padding: 10px;
-width: 100%;
-margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
 `
 
 export const InputAreaForEach = styled.View`
@@ -19,16 +19,25 @@ export const InputAreaForEach = styled.View`
     margin-bottom: 16px;
     display: flex;
     align-items: center;
-
 `
-const Input = styled.TextInput`
+
+export const InputAreaForEachPesquisa = styled.View`
+    width: 100%;
+    height: 100%;
+    background-color: ${themes.colors.neutral.neutral_20};
+    flex-direction: row;
+    border-radius: 32px;
+    padding-horizontal: 16px;
+    align-items: center;
+`
+export const Input = styled.TextInput`
     flex: 1;
     font-size: 16px;
     color: ${themes.colors.neutral.neutral_0};
     margin-left: 8px;
 `
 
-const BotaoTouch = styled.TouchableOpacity`
+export const BotaoTouch = styled.TouchableOpacity`
     padding-right: 8px; 
 `
 
@@ -47,7 +56,27 @@ export const InputCompleto = ({ icon, placeholder, value, onChangeText, password
             {password &&
                 <BotaoTouch onPress={() => setSenha(!senha)}>
                     <MaterialCommunityIcons name={senha ? 'eye' : 'eye-off'} size={30} color={themes.colors.neutral.neutral_80} />
-                </BotaoTouch>}
+                </BotaoTouch>
+            }
+        </InputAreaForEach>
+    )
+}
+
+export const InputPesquisa = ({ placeholder, value, onChangeText, onPress }) => {
+    return (
+        <InputAreaForEach>
+            <MaterialCommunityIcons name={icon} size={30} color={themes.colors.neutral.neutral_80} />
+            <Input
+                placeholder={placeholder}
+                placeholderTextColor={themes.colors.neutral.neutral_80}
+                value={value}
+                onChangeText={onChangeText}
+            />
+            {value &&
+                <BotaoTouch onPress={onPress}>
+                    <MaterialCommunityIcons name="close" size={30} color={themes.colors.neutral.neutral_0} />
+                </BotaoTouch>
+            }
         </InputAreaForEach>
     )
 }
