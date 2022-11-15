@@ -6,7 +6,6 @@ export default function ExecAudio(urls) {
   const video = React.useRef(null);
   const [status, setStatus] = React.useState({});
   const [pause, setPause] = useState(false)
-  console.log(urls)
   return (
     <View style={styles.container}>
       <Video

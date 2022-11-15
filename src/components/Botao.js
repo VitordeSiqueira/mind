@@ -2,6 +2,9 @@ import React from 'react'
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import styled from 'styled-components/native'
 import themes from '../themes/padrao'
+import { StyleSheet } from 'react-native'
+import { Text } from 'native-base'
+import { RectButton } from 'react-native-gesture-handler'
 
 const MessageButton = styled.TouchableOpacity`
 flex-direction: row;
@@ -95,3 +98,39 @@ export const StyledButtonTerciario = ({ icon, text, onPress }) => {
         </CustomButtonTerciario>
     )
 }
+
+export const BotaoCategorias = ({ titulo, active = false, ...rest }) => {
+    return (
+        <RectButton
+            style={[
+                styles.container,
+                active && styles.containerActive
+            ]}
+            {...rest}
+        >
+            <Text fontSize="lg" color={themes.colors.brand.texto} fontWeight="bold">
+                {titulo}
+            </Text>
+        </RectButton>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: themes.colors.brand.fundoCategoriaExercicios,
+        width: 100,
+        height: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15,
+    },
+    containerActive: {
+        backgroundColor: '#505050'
+    },
+    text: {
+        color: themes.colors.brand.texto
+    },
+    textActive: {
+        color: '#fff'
+    }
+})

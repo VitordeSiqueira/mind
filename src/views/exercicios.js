@@ -1,195 +1,152 @@
 import React, { useEffect, useState } from 'react';
-import { View, FlatList, SafeAreaView, StyleSheet, Button, Text, TextInput, TouchableOpacity } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { ButtonEnv } from '../components/ButtonEnv'
+import { Alert, FlatList, SafeAreaView, StyleSheet, Button, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { View, Text, HStack, VStack } from 'native-base';
+import { BotaoCategorias } from '../components/Botao'
 import Feather from 'react-native-vector-icons/Feather'
+import { BotaoTouch, InputAreaForEachPesquisa, Input, InputCompleto } from '../components/Input';
+import { MaterialCommunityIcons } from '@expo/vector-icons'
+import themes from '../themes/padrao'
+import Api from '../resources/Api';
 
 function Exercicios({ navigation }) {
-
-    const [data, setData] = useState([])
-    const [originalData, setOriginalData] = useState([])
+    const [data, setData] = useState()
+    const [dataPesquisa, setDataPesquisa] = useState([])
+    const [dataPesquisaResultado, setDataPesquisaResultado] = useState([])
+    const [textoDigitadoPesquisa, setTextoDigitadoPesquisa] = useState("")
+    const [inputPesquisa, setInputPesquisa] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [enviromentsSelected, setEnviromentsSelected] = useState('all')
-
-    useEffect(() => {
-        fetch('https://mind-back.onrender.com/conteudo')
-            .then((response) => response.json())
-            .then((json) => { setOriginalData(json); setData(json) })
-
-    }, [])
-
-    function estadoConteudo(tipo, url) {
-        console.log(url)
-        if (tipo == "Video") {
-            navigation.navigate('Video', { urls: url })
-        }
-
-        if (tipo == "Audio") {
-            navigation.navigate("Audio", { urls: url })
-        }
-
-        if (tipo == "Texto") {
-            navigation.navigate('Texto')
-        }
-    }
-
-    function renderPost(item) {
-        let iconTipo = ""
-        if (item.tipo == "Video") {
-            iconTipo = "video"
-        } else if (item.tipo = "Audio") {
-            iconTipo = "headphones"
-        } else if (item.tipo = "Audio") {
-            iconTipo = "type"
-        }
-        return (
-            <TouchableOpacity onPress={() => estadoConteudo(item.tipo, item.dados_arquivo.url)}>
-                <View style={styles.card}>
-                    <View style={styles.icon}>
-                        <Feather
-                            name={iconTipo}
-                            size={25}
-                        />
-                    </View>
-                    <View style={styles.conteudo}>
-                        <Text style={styles.title} numberOfLines={1}>
-                            {item.titulo}
-                        </Text>
-                        <Text style={styles.body} numberOfLines={4}>
-                            {item.tipo}
-                        </Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-        )
-    }
-
-    function handleStart() {
-        navigation.navigate('Entrar')
-    }
-
-    const DATA = [
+    const categorias = [
         {
             id: '1',
-            title: 'Ansiedade',
+            titulo: 'Ansiedade'
         },
         {
             id: '2',
-            title: 'Foco',
+            titulo: 'Ioga'
         },
         {
             id: '3',
-            title: 'Yoga',
-        },
-        {
-            id: '4',
-            title: 'Estresse',
-        },
-        {
-            id: '5',
-            title: 'Sono',
-        },
-        {
-            id: '6',
-            title: 'Psicologia',
-        },
+            titulo: 'Meditação'
+        }
     ];
 
+    const consultaConteudo = async () => {
+        setLoading(true)
+        const res = await Api.consultaConteudo()
+        res.ok === 0
+            ? Alert.alert('Não foi possível consultar os conteudos existentes')
+            : setData(res)
+        setLoading(false)
+    }
 
-    function search(s) {
-        let arr = JSON.parse(JSON.stringify(originalData))
-        setData(arr.filter(d => d.titulo.includes(s)))
+    useEffect(() => {
+        consultaConteudo()
+    }, [])
 
-        //remover assentos da pesquisa e do titulo
+    useEffect(() => {
+        if (textoDigitadoPesquisa) {
+            setDataPesquisa(data.filter(d => d.titulo.includes(textoDigitadoPesquisa)))
+        }
+    }, [textoDigitadoPesquisa])
 
-        //procurar em lower case ou upper
-
-        //script para procurando tanto no titulo ou corpo 
-        //setData(arr.filter(d => d.titulo.includes(s) || d.body.includes(s)))
+    function estadoConteudo(tipo, url) {
+        switch (tipo) {
+            case "Video":
+                navigation.navigate('Video', { urls: url })
+                break;
+            case "Audio":
+                navigation.navigate("Audio", { urls: url })
+                break;
+            case "Texto":
+                navigation.navigate('Texto')
+                break;
+        }
+    }
+    const conteudo = (item) => {
+        let iconTipo = ""
+        switch (item.tipo) {
+            case "Video":
+                iconTipo = "play-circle-outline"
+                break;
+            case "Audio":
+                iconTipo = "headphones"
+                break;
+            case "Texto":
+                iconTipo = "type"
+                break;
+        }
+        return (
+            <View w="48%" marginX="1%" marginY="1%" backgroundColor={themes.colors.brand.fundoCardExercicio} rounded="xl" borderWidth="1" borderColor={themes.colors.brand.fundoCardExercicio}>
+                <TouchableOpacity onPress={() => estadoConteudo(item.tipo, item.dados_arquivo.url)} key={item._id} >
+                    <HStack alignSelf="center" padding="2">
+                        <MaterialCommunityIcons name={iconTipo} size={70} color={themes.colors.brand.primario} />
+                    </HStack>
+                    <HStack alignSelf="center" w="100%" h="12" backgroundColor={themes.colors.brand.fundoCardExercicioTexto}>
+                        <Text numberOfLines={3} fontSize="md" color={themes.colors.brand.texto} fontWeight="semibold">
+                            {item.titulo}
+                        </Text>
+                    </HStack>
+                </TouchableOpacity >
+            </View>
+        )
     }
     return (
-
         <SafeAreaView>
-            <View style={styles.header}>
-                <TextInput
-                    style={styles.input}
-                    placeholder={'Pesquisa aqui'}
-                    autoCapitalize="none"
-                    onChangeText={(s) => search(s)}
-                />
+            <View alignSelf="center" marginTop="3">
+                <HStack space={5} alignItems="center" h="12">
+                    <VStack w="80" >
+                        {inputPesquisa ?
+                            <InputAreaForEachPesquisa>
+                                <Input
+                                    placeholder="Digite o que deseja"
+                                    value={textoDigitadoPesquisa}
+                                    onChangeText={t => setTextoDigitadoPesquisa(t)}
+                                />
+                                {textoDigitadoPesquisa ?
+                                    <BotaoTouch onPress={() => setTextoDigitadoPesquisa("")}>
+                                        <MaterialCommunityIcons name="close" size={25} color={themes.colors.neutral.neutral_0} />
+                                    </BotaoTouch>
+                                    : null
+                                }
+                            </InputAreaForEachPesquisa>
+                            :
+                            <HStack justifyContent="space-evenly">
+                                {categorias.map((categoria) => (
+                                    <BotaoCategorias
+                                        titulo={categoria.titulo}
+                                        key={categoria.id}
+                                    />
+                                ))}
+                            </HStack>
+                        }
+                    </VStack>
+
+                    <VStack>
+                        <BotaoTouch onPress={() => inputPesquisa ? setInputPesquisa(false) : setInputPesquisa(true)}>
+                            <MaterialCommunityIcons name="magnify" size={30} color="black" />
+                        </BotaoTouch>
+                    </VStack>
+                </HStack>
             </View>
-            <Button
-                onPress={() => console.log('oi')}
-                title='Cancelar'
-                accessibilityLabel='Cancelar'
-            />
-            <FlatList
-                data={DATA}
-                renderItem={({ item }) =>
-                    <ButtonEnv
-                        title={item.title}
-                    />}
-                keyExtractor={(item) => item.id}
-                horizontal
-                showsHorizontalScrollIndicator={false}
-            />
 
-            <FlatList
-                data={data}
-                keyExtractor={(item) => String(item._id)}
-                renderItem={({ item }) => renderPost(item)}
-            />
+            {loading == true ?
+                <ActivityIndicator size="large"
+                    color={themes.colors.brand.primario} />
+                :
+                <View margin="2%" >
+                    <FlatList
+                        data={dataPesquisa.length ? dataPesquisa : data}
+                        keyExtractor={(item) => String(item._id)}
+                        renderItem={({ item }) => conteudo(item)}
+                        numColumns={2}
+                        key={2}
+
+                    />
+                </View>
+            }
         </SafeAreaView>
-
     )
 }
-
-const styles = StyleSheet.create({
-    header: {
-        backgroundColor: 'powderblue',
-        height: 100,
-    },
-    icon: {
-        marginRight: 15,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    card: {
-        borderColor: '#222',
-        borderWidth: 1,
-        borderRadius: 4,
-        padding: 15,
-        marginHorizontal: 20,
-        marginTop: 20,
-        flexDirection: 'row'
-    },
-    title: {
-        fontSize: 14,
-        color: '#444',
-        fontWeight: '600',
-    },
-    body: {
-        fontSize: 13,
-        color: '#777',
-        fontWeight: 'normal',
-        marginTop: 7,
-    },
-    input: {
-        borderColor: '#eee',
-        borderWidth: 1,
-        borderRadius: 4,
-        height: 40,
-        marginTop: 10,
-        marginHorizontal: 20,
-        paddingLeft: 10,
-        backgroundColor: '#fff',
-    },
-    enviromentList: {
-        height: 40,
-        justifyContent: 'center',
-        paddingBottom: 5,
-        paddingHorizontal: 32,
-        marginVertical: 32
-    },
-})
 
 export default Exercicios
