@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, FlatList } from "react-native";
-import Example from "../components/Avatar";
+import { Alert, View, StyleSheet, FlatList } from "react-native";
+import { AvatarPerfil } from "../components/Avatar";
 import Nome from "../components/NomePerfil";
 import DescPerfil from "../components/DescPerfil";
 import AntDesign from "react-native-vector-icons/AntDesign";
-
+import themes from '../themes/padrao'
 import {
     VStack,
     Text,
@@ -17,47 +17,41 @@ import {
 } from "native-base";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-const numColumns = 3
+
+
 export default function Amigos({ navigation }) {
-
-    // const consultaPerfil = async () => {
-    //   const token = await AsyncStorage.getItem('perfil')
-    // }
-
-    // useEffect(() => {
-    //   consultaPerfil()
-    // }, [])
-
     const [data, setData] = useState([])
     const [originalData, setOriginalData] = useState([])
+    const [perfil, setPerfil] = useState()
+    const [loading, setLoading] = useState(false)
+    const numColumns = 3
 
-
+    const consultaPerfil = async () => {
+        setLoading(true)
+        const perfil_id = await AsyncStorage.getItem('perfil_id')
+        const res = await Api.consultaPerfil(perfil_id)
+        res.ok === 0
+            ? Alert.alert('Não foi possível consultar o perfil logado')
+            : setPerfil(res[0])
+        setLoading(false)
+    }
     useEffect(() => {
-        fetch('https://picsum.photos/v2/list')
-            .then((response) => response.json())
-            .then((json) => { setOriginalData(json); setData(json) })
-
+        consultaPerfil()
     }, [])
 
-
-
     function renderItem(item) {
-        console.log(item.url)
         return (
             <TouchableOpacity style={styles.itemAmigo}>
-                <Example url={item.url} size="xl" />
+                <AvatarPerfil props={{ url: "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: "Joao Vinicius" }} />
             </TouchableOpacity>
         )
     }
 
-
-
     return (
-
         <View style={styles.container}>
             <ScrollView>
                 <View style={styles.info}>
-                    <Example url="https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png" size="2xl" />
+                    <AvatarPerfil props={{ url: "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: "Joao Vinicius" }} />
                     <Text style={styles.text}>39 Amigos</Text>
                 </View>
                 <Divider my={7} />
@@ -67,11 +61,8 @@ export default function Amigos({ navigation }) {
                         keyExtractor={(item) => String(item.id)}
                         renderItem={({ item }) => renderItem(item)}
                         numColumns={numColumns}
-
                     />
-
                 </View>
-
             </ScrollView>
         </View>
 

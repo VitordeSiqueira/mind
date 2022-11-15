@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import { Alert, View, StyleSheet, ActivityIndicator } from "react-native";
 import themes from '../themes/padrao'
-
-import AvatarNomePerfil from "../components/AvatarNomePerfil";
+import { AvatarPerfil } from "../components/Avatar";
 import Api from '../resources/Api'
 
 import {
@@ -17,7 +16,6 @@ import {
 } from "native-base";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Progresso } from '../components/Progresso';
-import { Titulo2 } from '../components/Texto';
 import { Conquista } from '../components/Conquista';
 
 export default ({ navigation }) => {
@@ -37,9 +35,7 @@ export default ({ navigation }) => {
     consultaPerfil()
   }, [])
 
-
   return (
-
     <View style={styles.container}>
       {loading == true ?
         <ActivityIndicator size="large"
@@ -47,8 +43,7 @@ export default ({ navigation }) => {
         : perfil ?
           <ScrollView>
             <View style={styles.info}>
-              <AvatarNomePerfil props={{ url: perfil.foto_perfil ? perfil.foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: perfil.nome }} />
-              <Text style={styles.text} onPress={() => navigation.navigate("Amigos")}>39 Amigos</Text>
+              <AvatarPerfil props={{ url: perfil.foto_perfil ? perfil.foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: perfil.nome, amigos: perfil.amigos ? perfil.amigos.length : 0 }} onPress={() => navigation.navigate("Amigos")} />
             </View>
 
             <Divider />
@@ -100,9 +95,6 @@ const styles = StyleSheet.create({
   info: {
     flexDirection: "row",
     marginVertical: 20
-  },
-  text: {
-    color: "black",
   },
   progresso: {
     marginVertical: 20
