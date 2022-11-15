@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, FlatList, SafeAreaView, StyleSheet, Button, TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { Alert, FlatList, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { View, Text, HStack, VStack } from 'native-base';
 import { BotaoCategorias } from '../components/Botao'
-import Feather from 'react-native-vector-icons/Feather'
-import { BotaoTouch, InputAreaForEachPesquisa, Input, InputCompleto } from '../components/Input';
+import { BotaoTouch, InputAreaForEachPesquisa, Input } from '../components/Input';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import themes from '../themes/padrao'
 import Api from '../resources/Api';

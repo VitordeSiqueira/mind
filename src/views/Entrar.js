@@ -1,25 +1,6 @@
 import React, { useState } from "react";
-import {
-  NativeBaseProvider,
-  Link,
-  Box,
-  Image,
-  WarningOutlineIcon,
-  Center,
-  Heading,
-  Input,
-  FormControl,
-  Icon,
-  Button,
-  Checkbox,
-  Text,
-  HStack,
-  VStack,
-  View,
-} from "native-base";
+import { Image, Center, VStack } from "native-base";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { MaterialIcons } from "@expo/vector-icons/";
-import { useNavigation, CommonActions } from "@react-navigation/native";
 import { Alert, Platform } from 'react-native'
 import { InputArea, InputCompleto } from '../components/Input'
 import { StyledButtonPrimario, StyledMessageButton } from '../components/Botao'
@@ -28,7 +9,6 @@ import Api from '../resources/Api'
 import { AuthContext } from '../resources/Context'
 
 export default function Entrar({ navigation }) {
-  //const navigation = useNavigation();
 
   const [emailField, setEmailField] = useState("");
   const [senhaField, setSenhaField] = useState("");

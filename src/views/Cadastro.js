@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { NativeBaseProvider, Radio, Box, WarningOutlineIcon, Center, Heading, Input, FormControl, Icon, Button, Checkbox, Text, HStack, VStack } from 'native-base'
+import { Radio, Box, Center, VStack } from 'native-base'
 import { Alert, Platform, ActivityIndicator } from 'react-native'
-import { MaterialIcons } from '@expo/vector-icons/'
 import { InputArea, InputCompleto } from '../components/Input'
 import { StyledButtonPrimario, StyledMessageButton } from '../components/Botao'
 import Api from '../resources/Api'

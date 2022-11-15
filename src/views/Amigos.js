@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Alert, View, StyleSheet, FlatList } from "react-native";
 import { AvatarPerfil } from "../components/Avatar";
-import Nome from "../components/NomePerfil";
-import DescPerfil from "../components/DescPerfil";
-import AntDesign from "react-native-vector-icons/AntDesign";
 import themes from '../themes/padrao'
-import {
-    VStack,
-    Text,
-    HStack,
-    Center,
-    Circle,
-    Divider,
-    ScrollView,
-    Heading,
-} from "native-base";
+import { Text, Divider, ScrollView } from "native-base";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
