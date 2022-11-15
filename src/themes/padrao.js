@@ -9,7 +9,12 @@ export default {
             verde: '#C7EB7A',
             cinzaClaro: '#E5E3F5',
             amareloClaro: '#FFF1A4',
-            verdeClaro: '#E7F6C5'
+            verdeClaro: '#E7F6C5',
+            texto: '#47525E',
+            bordaProgresso: '#8F9BAF',
+            fundoCategoriaExercicios: '#C0CCDA',
+            fundoCardExercicio: '#E5E9F2',
+            fundoCardExercicioTexto: '#F9FAFC'
         },
         neutral: {
             neutral_0: '#25232D', neutral_80: '#1F1E28',
