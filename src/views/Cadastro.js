@@ -46,6 +46,9 @@ export default ({ navigation }) => {
 
   useEffect(() => {
     consultaPlanos()
+    if(planos.length){
+      setPlanoField(planos[0]._id)
+    }
   }, [])
 
   return (
@@ -55,55 +58,53 @@ export default ({ navigation }) => {
       _light={{ bg: "white" }}
     >
       <VStack width="full" p={5}>
+        {loading == true ?
+          <ActivityIndicator size="large"
+            color={themes.colors.brand.primario} />
+          :
+          <Box width="full">
 
-        <Box width="full">
+            <Titulo >Cadastrar-se</Titulo>
 
-          <Titulo >Cadastrar-se</Titulo>
+            <InputArea>
+              <InputCompleto
+                icon="human"
+                placeholder="Digite o seu CPF"
+                value={cpfField}
+                onChangeText={t => setCpfField(t)} />
+              <InputCompleto
+                icon="human"
+                placeholder="Digite o seu primeiro nome"
+                value={nomeField}
+                onChangeText={t => setNomeField(t)}
+              />
+              <InputCompleto
+                icon="human"
+                placeholder="Digite o seu sobrenome"
+                value={sobrenomeField}
+                onChangeText={t => setSobrenomeField(t)}
+              />
+              <InputCompleto
+                icon="phone"
+                placeholder="Digite o seu telefone"
+                value={telefoneField}
+                onChangeText={t => setTelefoneField(t)}
+              />
+              <InputCompleto
+                icon="email"
+                placeholder="Digite o seu e-mail"
+                value={emailField}
+                onChangeText={t => setEmailField(t)}
+              />
+              <InputCompleto
+                icon="lock"
+                placeholder="Digite a sua senha"
+                value={senhaField}
+                onChangeText={t => setSenhaField(t)}
+                password={true}
+              />
 
-          <InputArea>
-            <InputCompleto
-              icon="human"
-              placeholder="Digite o seu CPF"
-              value={cpfField}
-              onChangeText={t => setCpfField(t)} />
-            <InputCompleto
-              icon="human"
-              placeholder="Digite o seu primeiro nome"
-              value={nomeField}
-              onChangeText={t => setNomeField(t)}
-            />
-            <InputCompleto
-              icon="human"
-              placeholder="Digite o seu sobrenome"
-              value={sobrenomeField}
-              onChangeText={t => setSobrenomeField(t)}
-            />
-            <InputCompleto
-              icon="phone"
-              placeholder="Digite o seu telefone"
-              value={telefoneField}
-              onChangeText={t => setTelefoneField(t)}
-            />
-            <InputCompleto
-              icon="email"
-              placeholder="Digite o seu e-mail"
-              value={emailField}
-              onChangeText={t => setEmailField(t)}
-            />
-            <InputCompleto
-              icon="lock"
-              placeholder="Digite a sua senha"
-              value={senhaField}
-              onChangeText={t => setSenhaField(t)}
-              password={true}
-            />
 
-            {loading == true ?
-              <ActivityIndicator size="large"
-                color={themes.colors.brand.primario} />
-              : null
-            }
-            {planos.length ?
               <Radio.Group
                 name="radioGroupPlano"
                 value={planoField}
@@ -112,21 +113,21 @@ export default ({ navigation }) => {
                 }}
               >
                 {planos.map((plano) => (
-                  <Radio value={plano._id} my="1">
+                  <Radio value={plano._id} my="1" key={plano._id}>
                     {plano.nome}
                   </Radio>
                 ))}
               </Radio.Group>
-              : null
-            }
-            <StyledButtonPrimario
-              icon="login"
-              text="Registrar-se"
-              onPress={handleCadastroClick} />
-          </InputArea>
 
-          <StyledMessageButton onPress={() => navigation.push("Entrar")} text="Já tem uma conta?" textBold="Faça Login" />
-        </Box>
+              <StyledButtonPrimario
+                icon="login"
+                text="Registrar-se"
+                onPress={handleCadastroClick} />
+            </InputArea>
+
+            <StyledMessageButton onPress={() => navigation.push("Entrar")} text="Já tem uma conta?" textBold="Faça Login" />
+          </Box>
+        }
       </VStack>
     </Center >
   )

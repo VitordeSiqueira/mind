@@ -18,17 +18,6 @@ export default function VideoScreen(urls) {
                 resizeMode="contain"
                 onPlaybackStatusUpdate={status => setStatus(() => status)}
             />
-            {/* <TouchableOpacity onPress={tempool}><Text>oio</Text></TouchableOpacity> */}
-            {/* <TouchableOpacity onPress={abc}><Text>oiio</Text></TouchableOpacity> */}
-            {/* <View style={styles.buttons}>
-                <Button
-                    title={status.isPlaying ? 'Pause' : 'Play'}
-                    onPress={() =>
-                        status.isPlaying ? video.current.pauseAsync() : video.current.playAsync()
-                    }
-                />
-            </View> */}
-            {/* <Controls {...{togglePlayPauseBtn}} {...{pause}}/>  */}
         </View>
     );
 }

@@ -11,7 +11,7 @@ export const InputArea = styled.ScrollView`
 
 export const InputAreaForEach = styled.View`
     width: 100%;
-    height: 64px;
+    height: 50px;
     background-color: ${themes.colors.neutral.neutral_20};
     flex-direction: row;
     border-radius: 32px;

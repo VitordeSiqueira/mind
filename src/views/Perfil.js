@@ -75,7 +75,7 @@ export default ({ navigation }) => {
                   ))
                   :
                   <Text textAlign='center' fontSize="xl">
-                    Ainda não obteve nenhum conquista.{"\n"}Continue a tentar!!
+                    Ainda não obteve nenhuma conquista.{"\n"}Continue a tentar!!
                   </Text>
                 }
 
