@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, FlatList, SafeAreaView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { View, Text, HStack, VStack } from 'native-base';
-import { BotaoCategorias } from '../components/Botao'
+import { BotaoCategoria } from '../components/Botao'
 import { BotaoTouch, InputAreaForEachPesquisa, Input } from '../components/Input';
 import { MaterialCommunityIcons } from '@expo/vector-icons'
 import themes from '../themes/padrao'
 import Api from '../resources/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as Openanything from 'react-native-openanything'
 
 function Exercicios({ navigation }) {
     const [data, setData] = useState()
     const [dataPesquisa, setDataPesquisa] = useState([])
-    const [dataPesquisaResultado, setDataPesquisaResultado] = useState([])
+    const [dataCategoria, setDataCategoria] = useState([])
     const [textoDigitadoPesquisa, setTextoDigitadoPesquisa] = useState("")
     const [inputPesquisa, setInputPesquisa] = useState(false)
+    const [categoriaSelecionada, setCategoriaSelecionada] = useState(null)
     const [loading, setLoading] = useState(false)
-    const [enviromentsSelected, setEnviromentsSelected] = useState('all')
     const categorias = [
         {
             id: '1',
@@ -46,9 +47,25 @@ function Exercicios({ navigation }) {
 
     useEffect(() => {
         if (textoDigitadoPesquisa) {
-            setDataPesquisa(data.filter(d => d.titulo.includes(textoDigitadoPesquisa)))
+            if (dataCategoria.length) {
+                setDataPesquisa(dataCategoria.filter(d => d.titulo.includes(textoDigitadoPesquisa)))
+            } else {
+                setDataPesquisa(data.filter(d => d.titulo.includes(textoDigitadoPesquisa)))
+            }
+        }else{
+            setDataPesquisa([])
         }
     }, [textoDigitadoPesquisa])
+
+    useEffect(() => {
+        if (categoriaSelecionada) {
+            setDataCategoria(data.filter(d => d.categoria == categoriaSelecionada))
+        }
+
+        if (categoriaSelecionada == null) {
+            setDataCategoria([])
+        }
+    }, [categoriaSelecionada])
 
     async function estadoConteudo(conteudo_id, tipo, url) {
         const perfil_id = await AsyncStorage.getItem('perfil_id')
@@ -66,12 +83,13 @@ function Exercicios({ navigation }) {
             case "Audio":
                 navigation.navigate("Audio", { urls: url })
                 break;
-            case "Texto":
-                navigation.navigate('Texto')
+            case "Artigo":
+                Openanything.Pdf(url)
+
                 break;
         }
     }
-    
+
     const conteudo = (item) => {
         let iconTipo = ""
         switch (item.tipo) {
@@ -79,10 +97,10 @@ function Exercicios({ navigation }) {
                 iconTipo = "play-circle-outline"
                 break;
             case "Audio":
-            iconTipo = "headphones"
+                iconTipo = "headphones"
                 break;
-            case "Texto":
-                iconTipo = "type"
+            case "Artigo":
+                iconTipo = "file-document-outline"
                 break;
         }
         return (
@@ -122,9 +140,11 @@ function Exercicios({ navigation }) {
                             :
                             <HStack justifyContent="space-evenly">
                                 {categorias.map((categoria) => (
-                                    <BotaoCategorias
+                                    <BotaoCategoria
                                         titulo={categoria.titulo}
                                         key={categoria.id}
+                                        active={categoriaSelecionada == categoria.titulo ? true : false}
+                                        onPress={() => categoriaSelecionada !== categoria.titulo ? setCategoriaSelecionada(categoria.titulo) : setCategoriaSelecionada(null)}
                                     />
                                 ))}
                             </HStack>
@@ -145,7 +165,7 @@ function Exercicios({ navigation }) {
                 :
                 <View margin="2%" >
                     <FlatList
-                        data={dataPesquisa.length ? dataPesquisa : data}
+                        data={textoDigitadoPesquisa ? dataPesquisa : dataCategoria.length ? dataCategoria : data}
                         keyExtractor={(item) => String(item._id)}
                         renderItem={({ item }) => conteudo(item)}
                         numColumns={2}

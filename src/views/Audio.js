@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Video } from 'expo-av';
 
-export default function VideoScreen(urls) {
+export default function Audio(urls) {
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
     const [pause, setPause] = useState(false)

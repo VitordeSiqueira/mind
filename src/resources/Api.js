@@ -91,4 +91,16 @@ export default {
         const json = await req.json()
         return json
     },
+    consultaExerciciosRecentes: async (perfil_id) => {
+        const req = await fetch(`${BASE_API}/perfil/id/${perfil_id}`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify()
+        })
+        const json = await req.json()
+        return json
+    },
 }

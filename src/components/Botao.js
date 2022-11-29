@@ -99,14 +99,12 @@ export const StyledButtonTerciario = ({ icon, text, onPress }) => {
     )
 }
 
-export const BotaoCategorias = ({ titulo, active = false, ...rest }) => {
+export const BotaoCategoria = ({ titulo, active, onPress, ...rest }) => {
     return (
         <RectButton
-            style={[
-                styles.container,
-                active && styles.containerActive
-            ]}
+            style={active ? styles.containerActive : styles.container}
             {...rest}
+            onPress={onPress}
         >
             <Text fontSize="lg" color={themes.colors.brand.texto} fontWeight="bold">
                 {titulo}
@@ -125,7 +123,12 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     containerActive: {
-        backgroundColor: '#505050'
+        backgroundColor: themes.colors.brand.bordaProgresso,
+        width: 100,
+        height: 35,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 15,
     },
     text: {
         color: themes.colors.brand.texto

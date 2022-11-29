@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Image, Center, VStack } from "native-base";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { useState } from "react"
+import { Image, Center, VStack } from "native-base"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { Alert, Platform } from 'react-native'
 import { InputArea, InputCompleto } from '../components/Input'
 import { StyledButtonPrimario, StyledMessageButton } from '../components/Botao'
@@ -10,14 +10,14 @@ import { AuthContext } from '../resources/Context'
 
 export default function Entrar({ navigation }) {
 
-  const [emailField, setEmailField] = useState("");
-  const [senhaField, setSenhaField] = useState("");
+  const [emailField, setEmailField] = useState("")
+  const [senhaField, setSenhaField] = useState("")
 
-  const { entrar } = React.useContext(AuthContext);
+  const { entrar } = React.useContext(AuthContext)
 
   const handleEntrarClick = async () => {
     if (senhaField && emailField) {
-      let res = await Api.entrar(emailField, senhaField);
+      let res = await Api.entrar(emailField, senhaField)
       if (res.access_token) {
         await AsyncStorage.setItem("token", res.access_token)
         await AsyncStorage.setItem("perfil_id", res.perfil_id)
@@ -32,7 +32,7 @@ export default function Entrar({ navigation }) {
         ? alert(`‼️Atenção: Preencha todos os campos`)
         : Alert.alert("‼️Atenção", "Preencha todos os campos")
     }
-  };
+  }
 
   return (
     <Center height="full" _dark={{ bg: "black" }} _light={{ bg: "white" }}>
@@ -74,5 +74,5 @@ export default function Entrar({ navigation }) {
 
       </VStack>
     </Center>
-  );
+  )
 }
