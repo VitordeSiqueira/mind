@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Mind",
-    "slug": "Mind",
+    "name": "mind-menu",
+    "slug": "mind-menu",
     "version": "1.0.0",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
