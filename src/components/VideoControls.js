@@ -1,26 +1,21 @@
 import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
-import AntDesign from "react-native-vector-icons/AntDesign";
 
 export default function Controls({togglePlayPauseBtn, pause}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity>
-        <AntDesign name="banckward" size={30} color="white" />
       </TouchableOpacity>
 
       {pause ? (
         <TouchableOpacity style={styles.playPauseBtn} onPress={togglePlayPauseBtn}>
-          <AntDesign name="playcircleo" size={30} color="#1b1246" />
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.playPauseBtn} onPress={togglePlayPauseBtn}>
-          <AntDesign name="pausecircleo" size={30} color="#1b1246" />
         </TouchableOpacity>
       )}
 
       <TouchableOpacity>
-        <AntDesign name="forward" size={30} color="white" />
       </TouchableOpacity>
     </View>
   );
