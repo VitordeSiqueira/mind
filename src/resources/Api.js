@@ -43,6 +43,31 @@ export default {
         const json = await req.json()
         return json
     },
+    alterarCadastro: async (perfil_id, cpf, nome, sobrenome, telefone, email, senha) => {
+        const login = { email, senha }
+        const req = await fetch(`${BASE_API}/perfil/${perfil_id}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ cpf, nome, sobrenome, telefone, login })
+        })
+        const json = await req.json()
+        return json
+    }, 
+    alterarImagemPerfil: async (perfil_id, formData) => {
+        const req = await fetch(`${BASE_API}/perfil/alterar/imagem/${perfil_id}`, {
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'multipart/form-data',
+            },
+            body: formData
+        })
+        const json = await req.json()
+        return json
+    },
     consultaPlanos: async () =>{
         const req = await fetch(`${BASE_API}/plano`, {
             method: 'GET',

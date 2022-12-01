@@ -8,6 +8,7 @@ import themes from '../themes/padrao'
 import Api from '../resources/Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Openanything from 'react-native-openanything'
+import { useFocusEffect } from '@react-navigation/native';
 
 function Exercicios({ navigation }) {
     const [data, setData] = useState()
@@ -45,6 +46,12 @@ function Exercicios({ navigation }) {
         consultaConteudo()
     }, [])
 
+    useFocusEffect(
+        React.useCallback(() => {
+            consultaConteudo()
+        }, [])
+    )
+
     useEffect(() => {
         if (textoDigitadoPesquisa) {
             if (dataCategoria.length) {
@@ -52,7 +59,7 @@ function Exercicios({ navigation }) {
             } else {
                 setDataPesquisa(data.filter(d => d.titulo.includes(textoDigitadoPesquisa)))
             }
-        }else{
+        } else {
             setDataPesquisa([])
         }
     }, [textoDigitadoPesquisa])

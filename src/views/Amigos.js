@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { Alert, View, StyleSheet, FlatList } from "react-native";
+import { Alert, View, StyleSheet, ActivityIndicator } from "react-native";
 import { AvatarPerfil } from "../components/Avatar";
 import themes from '../themes/padrao'
 import { Text, Divider, ScrollView } from "native-base";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import Api from '../resources/Api';
 
-
-export default function Amigos({ navigation }) {
+export default ({ navigation }) => {
     const [data, setData] = useState([])
     const [originalData, setOriginalData] = useState([])
     const [perfil, setPerfil] = useState()
@@ -23,6 +23,7 @@ export default function Amigos({ navigation }) {
             : setPerfil(res[0])
         setLoading(false)
     }
+
     useEffect(() => {
         consultaPerfil()
     }, [])
@@ -37,21 +38,19 @@ export default function Amigos({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <ScrollView>
-                <View style={styles.info}>
-                    <AvatarPerfil props={{ url: "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: "Joao Vinicius" }} />
-                    <Text style={styles.text}>39 Amigos</Text>
-                </View>
-                <Divider my={7} />
-                <View style={styles.amigos}>
-                    <FlatList
-                        data={data}
-                        keyExtractor={(item) => String(item.id)}
-                        renderItem={({ item }) => renderItem(item)}
-                        numColumns={numColumns}
-                    />
-                </View>
-            </ScrollView>
+            {loading == true ?
+                <ActivityIndicator size="large"
+                    color={themes.colors.brand.primario} />
+                : perfil ?
+                    <ScrollView>
+                        <View style={styles.info}>
+                            <AvatarPerfil props={{ url: perfil.foto_perfil ? perfil.foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_0, tamanhoFonte: 20, nomePerfil: perfil.nome, amigos: perfil.amigos ? perfil.amigos.length : 0 }} onPress={() => navigation.navigate("Amigos")} />
+                        </View>
+
+                        <Divider />
+                    </ScrollView>
+                    : null
+            }
         </View>
 
     );

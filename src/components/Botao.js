@@ -45,7 +45,7 @@ padding-horizontal: 10px;
 const CustomButtonSecundario = styled.TouchableOpacity`
 flex-direction: row;
 height: 50px;
-background-color: ${themes.colors.brand.secundario};
+background-color: ${themes.colors.brand.texto};
 margin-top: 16px;
 border-radius: 10px;
 justify-content: center;

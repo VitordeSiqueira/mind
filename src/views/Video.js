@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Video } from 'expo-av';
 
-export default function VideoPlayer(urls) {
+export default (urls) => {
     const video = React.useRef(null);
     const [status, setStatus] = React.useState({});
-    const [pause, setPause] = useState(false)
     return (
         <View style={styles.container}>
             <Video

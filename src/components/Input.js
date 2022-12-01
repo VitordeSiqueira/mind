@@ -62,6 +62,28 @@ export const InputCompleto = ({ icon, placeholder, value, onChangeText, password
     )
 }
 
+export const InputCompletoDesabilitado = ({ icon, placeholder, value, onChangeText, password }) => {
+    const [senha, setSenha] = useState(password);
+    return (
+        <InputAreaForEach>
+            <MaterialCommunityIcons name={icon} size={30} color={themes.colors.neutral.neutral_80} />
+            <Input
+                placeholder={placeholder}
+                placeholderTextColor={themes.colors.neutral.neutral_80}
+                value={value}
+                onChangeText={onChangeText}
+                secureTextEntry={senha}
+                editable={false}
+            />
+            {password &&
+                <BotaoTouch onPress={() => setSenha(!senha)}>
+                    <MaterialCommunityIcons name={senha ? 'eye' : 'eye-off'} size={30} color={themes.colors.neutral.neutral_80} />
+                </BotaoTouch>
+            }
+        </InputAreaForEach>
+    )
+}
+
 export const InputPesquisa = ({ placeholder, value, onChangeText, onPress }) => {
     return (
         <InputAreaForEach>

@@ -8,7 +8,7 @@ import { Titulo, StyledLinkLegenda } from '../components/Texto'
 import Api from '../resources/Api'
 import { AuthContext } from '../resources/Context'
 
-export default function Entrar({ navigation }) {
+export default ({ navigation }) => {
 
   const [emailField, setEmailField] = useState("")
   const [senhaField, setSenhaField] = useState("")

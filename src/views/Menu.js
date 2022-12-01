@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
-import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer'
+import { DrawerContentScrollView, DrawerItem, useDrawerStatus } from '@react-navigation/drawer'
 import { AvatarPerfil } from '../components/Avatar'
 import themes from '../themes/padrao'
 import Api from '../resources/Api'
 import { AuthContext } from '../resources/Context'
 import { StatusBar } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useFocusEffect } from '@react-navigation/native';
 
 export default (props) => {
     const { sair } = React.useContext(AuthContext);
@@ -26,7 +26,7 @@ export default (props) => {
 
     useEffect(() => {
         consultaPerfil()
-    }, [])
+    }, [useDrawerStatus()])
 
     return (
         <View style={{ flex: 1, justifyContent: 'center', backgroundColor: themes.colors.brand.secundario }}>
@@ -45,8 +45,8 @@ export default (props) => {
                                 <DrawerItem label="Exercícios" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Exercicios")} />
                                 <DrawerItem label="Recentes" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Recentes")} />
                                 <DrawerItem label="Amigos" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Amigos")} />
-                                <DrawerItem label="Configurações" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Perfil")} />
-                                <DrawerItem label="Ajuda" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Perfil")} />
+                                <DrawerItem label="Configuração" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Configuração")} />
+                                <DrawerItem label="Ajuda" labelStyle={{ color: '#ffffff', fontSize: 15 }} onPress={() => props.navigation.navigate("Ajuda")} />
                             </View>
                         </DrawerContentScrollView>
 

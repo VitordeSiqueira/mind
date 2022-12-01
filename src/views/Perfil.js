@@ -3,20 +3,11 @@ import { Alert, View, StyleSheet, ActivityIndicator } from "react-native";
 import themes from '../themes/padrao'
 import { AvatarPerfil } from "../components/Avatar";
 import Api from '../resources/Api'
-
-import {
-  VStack,
-  Text,
-  HStack,
-  Center,
-  Circle,
-  Divider,
-  ScrollView,
-  Heading,
-} from "native-base";
+import { VStack, Text, Divider, ScrollView, Image } from "native-base";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Progresso } from '../components/Progresso';
 import { Conquista } from '../components/Conquista';
+import { useFocusEffect } from '@react-navigation/native';
 
 export default ({ navigation }) => {
   const [perfil, setPerfil] = useState()
@@ -31,9 +22,16 @@ export default ({ navigation }) => {
       : setPerfil(res[0])
     setLoading(false)
   }
+
   useEffect(() => {
     consultaPerfil()
   }, [])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      consultaPerfil()
+    }, [])
+  )
 
   return (
     <View style={styles.container}>
@@ -74,11 +72,15 @@ export default ({ navigation }) => {
                     <Conquista conquistaInfo={conquista} key={conquista.id} />
                   ))
                   :
-                  <Text textAlign='center' fontSize="xl">
-                    Ainda não obteve nenhuma conquista.{"\n"}Continue a tentar!!
-                  </Text>
+                  <>
+                    <Image source={{
+                      uri: `https://mind-app-bucket.s3.sa-east-1.amazonaws.com/outros/sad.png`
+                    }} alt="Carinha triste" size="md  " />
+                    <Text textAlign='center' fontSize="xl">
+                      Ainda não obteve nenhuma conquista.{"\n"}Continue a tentar!!
+                    </Text>
+                  </>
                 }
-
               </VStack>
             </View>
           </ScrollView>
