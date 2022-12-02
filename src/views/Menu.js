@@ -11,21 +11,21 @@ import { useFocusEffect } from '@react-navigation/native';
 
 export default (props) => {
     const { sair } = React.useContext(AuthContext);
-    const [perfil, setPerfil] = useState()
+    const [perfilNome, setPerfilNome] = useState()
+    const [perfilFotoUrl, setPerfilFotoUrl] = useState()
     const [loading, setLoading] = useState(false)
 
-    const consultaPerfil = async () => {
+    const consultaDados = async () => {
         setLoading(true)
-        const perfil_id = await AsyncStorage.getItem('perfil_id')
-        const res = await Api.consultaPerfil(perfil_id)
-        res.ok === 0
-            ? Alert.alert('Não foi possível consultar o perfil logado')
-            : setPerfil(res[0])
+        const perfil_nome = await AsyncStorage.getItem('perfil_nome')
+        const perfil_foto_perfil = await AsyncStorage.getItem('perfil_foto_url')
+        setPerfilNome(perfil_nome)
+        setPerfilFotoUrl(perfil_foto_perfil)
         setLoading(false)
     }
 
     useEffect(() => {
-        consultaPerfil()
+        consultaDados()
     }, [useDrawerStatus()])
 
     return (
@@ -33,11 +33,11 @@ export default (props) => {
             {loading == true ?
                 <ActivityIndicator size="large"
                     color={themes.colors.brand.primario} />
-                : perfil ?
+                : perfilNome ?
                     <>
                         <DrawerContentScrollView {...props} >
                             <View style={{ flex: 1, flexDirection: 'row', backgroundColor: themes.colors.brand.primario, paddingTop: 30, paddingBottom: 30 }} >
-                                <AvatarPerfil props={{ url: perfil.foto_perfil ? perfil.foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_100, tamanhoFonte: 20, nomePerfil: perfil.nome, amigos: null }} />
+                                <AvatarPerfil props={{ url: perfilFotoUrl ? perfilFotoUrl : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png", tamanhoAvatar: "xl", corFonte: themes.colors.neutral.neutral_100, tamanhoFonte: 20, nomePerfil: perfilNome, amigos: null }} />
                             </View>
 
                             <View style={{ margin: 15 }}>

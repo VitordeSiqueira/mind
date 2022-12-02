@@ -20,6 +20,11 @@ export default ({ navigation }) => {
     res.ok === 0
       ? Alert.alert('Não foi possível consultar o perfil logado')
       : setPerfil(res[0])
+    if(perfil){
+      await AsyncStorage.setItem("perfil_nome", perfil.nome)
+      await AsyncStorage.setItem("perfil_foto_url", perfil.foto_perfil.url)
+    }
+    console.log(res)
     setLoading(false)
   }
 
