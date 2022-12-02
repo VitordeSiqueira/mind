@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { Alert, View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { Alert, View, TouchableOpacity, Text, ActivityIndicator, LogBox } from 'react-native';
 import { DrawerContentScrollView, DrawerItem, useDrawerStatus } from '@react-navigation/drawer'
 import { AvatarPerfil } from '../components/Avatar'
 import themes from '../themes/padrao'
-import Api from '../resources/Api'
 import { AuthContext } from '../resources/Context'
 import { StatusBar } from 'native-base';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useFocusEffect } from '@react-navigation/native';
 
 export default (props) => {
     const { sair } = React.useContext(AuthContext);
     const [perfilNome, setPerfilNome] = useState()
     const [perfilFotoUrl, setPerfilFotoUrl] = useState()
     const [loading, setLoading] = useState(false)
+
+    LogBox.ignoreLogs(["EventEmitter.removeListener"]);
 
     const consultaDados = async () => {
         setLoading(true)

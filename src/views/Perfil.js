@@ -24,7 +24,6 @@ export default ({ navigation }) => {
       await AsyncStorage.setItem("perfil_nome", perfil.nome)
       await AsyncStorage.setItem("perfil_foto_url", perfil.foto_perfil.url)
     }
-    console.log(res)
     setLoading(false)
   }
 
