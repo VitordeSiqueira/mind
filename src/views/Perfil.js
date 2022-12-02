@@ -20,9 +20,9 @@ export default ({ navigation }) => {
     res.ok === 0
       ? Alert.alert('Não foi possível consultar o perfil logado')
       : setPerfil(res[0])
-    if(perfil){
-      await AsyncStorage.setItem("perfil_nome", perfil.nome)
-      await AsyncStorage.setItem("perfil_foto_url", perfil.foto_perfil ? perfil.foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png")
+    if (res[0].nome) {
+      await AsyncStorage.setItem("perfil_nome", res[0].nome)
+      await AsyncStorage.setItem("perfil_foto_url", res[0].foto_perfil ? res[0].foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png")
     }
     setLoading(false)
   }
