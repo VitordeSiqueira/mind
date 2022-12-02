@@ -22,14 +22,10 @@ export default ({ navigation }) => {
       : setPerfil(res[0])
     if(perfil){
       await AsyncStorage.setItem("perfil_nome", perfil.nome)
-      await AsyncStorage.setItem("perfil_foto_url", perfil.foto_perfil.url)
+      await AsyncStorage.setItem("perfil_foto_url", perfil.foto_perfil ? perfil.foto_perfil.url : "https://mind-app-bucket.s3.amazonaws.com/imagens_perfil/0ac9d2294ddd0fb44cb631a97480c120-default-user.png")
     }
     setLoading(false)
   }
-
-  useEffect(() => {
-    consultaPerfil()
-  }, [])
 
   useFocusEffect(
     React.useCallback(() => {
@@ -79,7 +75,7 @@ export default ({ navigation }) => {
                   <>
                     <Image source={{
                       uri: `https://mind-app-bucket.s3.sa-east-1.amazonaws.com/outros/sad.png`
-                    }} alt="Carinha triste" size="md  " />
+                    }} alt="Carinha triste" size="md" />
                     <Text textAlign='center' fontSize="xl">
                       Ainda não obteve nenhuma conquista.{"\n"}Continue a tentar!!
                     </Text>

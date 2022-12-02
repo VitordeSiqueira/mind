@@ -46,10 +46,13 @@ export default ({ navigation }) => {
 
   useEffect(() => {
     consultaPlanos()
-    if(planos.length){
+  }, [])
+
+  useEffect(() => {
+    if (planos.length) {
       setPlanoField(planos[0]._id)
     }
-  }, [])
+  }, [planos])
 
   return (
     <Center
@@ -61,72 +64,73 @@ export default ({ navigation }) => {
         {loading == true ?
           <ActivityIndicator size="large"
             color={themes.colors.brand.primario} />
-          :
-          <Box width="full">
+          : planos.length ?
+            <Box width="full">
 
-            <Titulo >Cadastrar-se</Titulo>
+              <Titulo >Cadastrar-se</Titulo>
 
-            <InputArea>
-              <InputCompleto
-                icon="human"
-                placeholder="Digite o seu CPF"
-                value={cpfField}
-                onChangeText={t => setCpfField(t)} />
-              <InputCompleto
-                icon="human"
-                placeholder="Digite o seu primeiro nome"
-                value={nomeField}
-                onChangeText={t => setNomeField(t)}
-              />
-              <InputCompleto
-                icon="human"
-                placeholder="Digite o seu sobrenome"
-                value={sobrenomeField}
-                onChangeText={t => setSobrenomeField(t)}
-              />
-              <InputCompleto
-                icon="phone"
-                placeholder="Digite o seu telefone"
-                value={telefoneField}
-                onChangeText={t => setTelefoneField(t)}
-              />
-              <InputCompleto
-                icon="email"
-                placeholder="Digite o seu e-mail"
-                value={emailField}
-                onChangeText={t => setEmailField(t)}
-              />
-              <InputCompleto
-                icon="lock"
-                placeholder="Digite a sua senha"
-                value={senhaField}
-                onChangeText={t => setSenhaField(t)}
-                password={true}
-              />
+              <InputArea>
+                <InputCompleto
+                  icon="human"
+                  placeholder="Digite o seu CPF"
+                  value={cpfField}
+                  onChangeText={t => setCpfField(t)} />
+                <InputCompleto
+                  icon="human"
+                  placeholder="Digite o seu primeiro nome"
+                  value={nomeField}
+                  onChangeText={t => setNomeField(t)}
+                />
+                <InputCompleto
+                  icon="human"
+                  placeholder="Digite o seu sobrenome"
+                  value={sobrenomeField}
+                  onChangeText={t => setSobrenomeField(t)}
+                />
+                <InputCompleto
+                  icon="phone"
+                  placeholder="Digite o seu telefone"
+                  value={telefoneField}
+                  onChangeText={t => setTelefoneField(t)}
+                />
+                <InputCompleto
+                  icon="email"
+                  placeholder="Digite o seu e-mail"
+                  value={emailField}
+                  onChangeText={t => setEmailField(t)}
+                />
+                <InputCompleto
+                  icon="lock"
+                  placeholder="Digite a sua senha"
+                  value={senhaField}
+                  onChangeText={t => setSenhaField(t)}
+                  password={true}
+                />
 
 
-              <Radio.Group
-                name="radioGroupPlano"
-                value={planoField}
-                onChange={(nextValue) => {
-                  setPlanoField(nextValue);
-                }}
-              >
-                {planos.map((plano) => (
-                  <Radio value={plano._id} my="1" key={plano._id}>
-                    {plano.nome}
-                  </Radio>
-                ))}
-              </Radio.Group>
+                <Radio.Group
+                  name="radioGroupPlano"
+                  value={planoField}
+                  onChange={(nextValue) => {
+                    setPlanoField(nextValue);
+                  }}
+                >
+                  {planos.map((plano) => (
+                    <Radio value={plano._id} my="1" key={plano._id}>
+                      {plano.nome}
+                    </Radio>
+                  ))}
+                </Radio.Group>
 
-              <StyledButtonPrimario
-                icon="login"
-                text="Registrar-se"
-                onPress={handleCadastroClick} />
-            </InputArea>
+                <StyledButtonPrimario
+                  icon="login"
+                  text="Registrar-se"
+                  onPress={handleCadastroClick} />
+              </InputArea>
 
-            <StyledMessageButton onPress={() => navigation.push("Entrar")} text="Já tem uma conta?" textBold="Faça Login" />
-          </Box>
+              <StyledMessageButton onPress={() => navigation.push("Entrar")} text="Já tem uma conta?" textBold="Faça Login" />
+            </Box>
+            : null
         }
       </VStack>
     </Center >

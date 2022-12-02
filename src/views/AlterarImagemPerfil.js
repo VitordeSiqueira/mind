@@ -15,25 +15,27 @@ export default ({ navigation }) => {
     const [foto, setFoto] = React.useState(null);
 
     const handleSalvarClick = async () => {
-        if (foto !== perfil.foto_perfil.url && perfilId) {
+        if (((perfil.foto_perfil && foto !== perfil.foto_perfil.url) || !perfil.foto_perfil) && perfilId) {
             let filename = foto.split('/').pop()
             let uriParts = foto.split('.')
             let fileType = uriParts[uriParts.length - 1]
             let formData = new FormData();
             formData.append('arquivo', {
-                uri: foto, name: filename, type: `image/${fileType}` });
+                uri: foto, name: filename, type: `image/${fileType}`
+            });
             let res = await Api.alterarImagemPerfil(perfilId, formData)
             if (res.error) {
                 Platform.OS === "web"
                     ? alert(`‼️Erro: ${res.error}`)
                     : Alert.alert("‼️Erro", res.error);
             } else {
+                const res = await Api.consultaPerfil(perfilId)
+                res.ok === 0
+                    ? Alert.alert('Não foi possível consultar o perfil')
+                    : setPerfil(res[0])
+                await AsyncStorage.setItem("perfil_foto_url", res[0].foto_perfil.url)
                 navigation.navigate("Configuração")
             }
-        } else {
-            Platform.OS === "web"
-                ? alert(`‼️Atenção: Preencha todos os campos`)
-                : Alert.alert("‼️Atenção", "Preencha todos os campos");
         }
     }
 
